@@ -1,0 +1,64 @@
+@import @/styles/helpers
+
+.header
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    z-index: 30
+    padding: 30px 0
+    background-color: $c1
+    +w
+        padding: 40px 0
+    +m
+        padding: 24px 0
+    // &.visible
+    //     padding: 32px 0
+    //     background: rgba($n9, .95)
+    //     +w
+    //         padding: 24px 0
+    //     +m
+    //         padding: 20px 0
+    // &.open.visible
+    //     background: transparent
+
+.container
+    display: flex
+    align-items: center
+
+.logo
+    position: relative
+    z-index: 45
+
+.button
+    width: 150px
+    height: 30px
+    border-radius: 5px
+    background-color: $n12
+    color: $n0
+    display: flex
+    align-items: center
+    border: none
+    +m
+        display: none
+.buttonText
+    +bold
+
+.menu
+    margin-right: auto
+    margin-left: 15em
+    +t
+        display: none
+
+.link
+    +baseB
+    transition: color .2s
+    &:hover,
+    .buttonText
+        color: $n2
+    &.active
+        padding-bottom: 4px
+        border-bottom: 2px solid $n0
+        color: $n0
+    &:not(:last-child)
+        margin-right: 48px
