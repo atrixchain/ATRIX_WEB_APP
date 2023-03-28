@@ -1,38 +1,59 @@
 import cn from "classnames";
 import styles from "./Main.module.sass";
 import Image from "@/components/Image";
-import { Button, Input, Space } from "antd";
+import { Button, InputNumber, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 import ModalForm from "./Modal";
-import { useState } from "react";
-type pickedCrypto = {
+import { SetStateAction, useState } from "react";
+import ModalSumbitForm from "./ModalSubmit";
+import { cryptos } from "@/mocks/cryptos";
+
+interface pickedCrypto {
   title: string;
+  name: string;
   image: string;
-};
-type MainProps = {
-  handleChangeFirstData: (value: number) => void;
-  handleChangeSecondData: (value: number) => void;
-  setFirstPickedCrypto: (value: string) => void;
-  firstPickedCrypto?: pickedCrypto;
-  setSecondPickedCrypto: (value: string) => void;
-  secondPickedCrypto?: pickedCrypto;
-};
+}
+
+type MainProps = {};
 
 const transfer = "/images/transfer.svg";
 const swap = "/images/swap.svg";
 
-const Main = ({
-  handleChangeFirstData,
-  handleChangeSecondData,
-  firstPickedCrypto,
-  secondPickedCrypto,
-  setFirstPickedCrypto,
-  setSecondPickedCrypto,
-}: MainProps) => {
+const Main = ({}: MainProps) => {
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+  const [isSwapPressed, setIsSwapPressed] = useState(false);
 
+  const [firstInputValue, setFirstInputValue] = useState(0);
+  const [secondInputValue, setSecondInputValue] = useState(0);
+
+  const [firstPickedCrypto, setFirstPickedCrypto] = useState("BTC");
+  const [secondPickedCrypto, setSecondPickedCrypto] = useState("ETH");
+
+  const [searchField, setSearchField] = useState("");
+
+  const filteredPersons = cryptos.filter((item) => {
+    return item.title.toLowerCase().includes(searchField.toLowerCase());
+  });
+
+  const handleChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setSearchField(event.target.value);
+  };
+
+  const filteredFirstCrypto: pickedCrypto[] = cryptos.filter((crypto) => {
+    return crypto.title === firstPickedCrypto;
+  });
+  const { title: firstTitle, image: firstImage } = filteredFirstCrypto[0];
+
+  const filteredSecondCrypto: pickedCrypto[] = cryptos.filter(
+    (crypto: pickedCrypto) => {
+      return crypto.title === secondPickedCrypto;
+    }
+  );
+  const { title: secondTitle, image: secondImage } = filteredSecondCrypto[0];
 
   const showFirstModal = () => {
     setIsFirstModalOpen(true);
@@ -49,16 +70,21 @@ const Main = ({
     setIsSecondModalOpen(false);
   };
 
+  const swapModalCancel = () => {
+    setIsSwapPressed(false);
+  };
+
   return (
     <div className={cn("section", styles.section)}>
       <div className={cn("appHeader", styles.title)}>SWAP</div>
       <Space direction="vertical" className={styles.border}>
         <Space direction="horizontal" className={styles.input}>
           <Space direction="vertical" className={styles.iconSpace}>
-            <Input
+            <InputNumber
               className={styles.inputPlaceholder}
-              onChange={(e: any) => handleChangeFirstData(e.target.value)}
+              onChange={(value: any) => setFirstInputValue(value)}
               placeholder="You sen"
+              defaultValue={0}
             />
             <Image src={transfer} width={25} height={25} />
           </Space>
@@ -68,19 +94,8 @@ const Main = ({
               onClick={showFirstModal}
               className={styles.buttonModal}
             >
-              <Image
-                src={
-                  firstPickedCrypto
-                    ? firstPickedCrypto.image
-                    : "/cryptos/BTC.svg"
-                }
-                width={35}
-                height={35}
-                alt={firstPickedCrypto ? firstPickedCrypto.title : "BTC"}
-              />
-              <div className={styles.bold}>
-                {firstPickedCrypto ? firstPickedCrypto.title : "BTC"}
-              </div>
+              <Image src={firstImage} width={35} height={35} alt={firstImage} />
+              <div className={styles.bold}>{firstTitle}</div>
               <DownOutlined />
             </Button>
             <Image src={swap} width={25} height={25} />
@@ -88,49 +103,53 @@ const Main = ({
         </Space>
 
         <Space direction="horizontal" className={styles.input}>
-          <Input
+          <InputNumber
             className={styles.inputPlaceholder}
-            onChange={(e: any) => handleChangeSecondData(e.target.value)}
+            onChange={(value: any) => setSecondInputValue(value)}
             placeholder="You sen"
+            defaultValue={0}
           />
           <Button
             type="primary"
             onClick={showSecondModal}
             className={styles.buttonModal}
           >
-            <Image
-              src={
-                secondPickedCrypto
-                  ? secondPickedCrypto.image
-                  : "/cryptos/ETH.svg"
-              }
-              width={35}
-              height={35}
-              alt={secondPickedCrypto ? secondPickedCrypto.title : "ETH"}
-            />
-            <div className={styles.bold}>
-              {secondPickedCrypto ? secondPickedCrypto.title : "ETH"}
-            </div>
+            <Image src={secondImage} width={35} height={35} alt={secondTitle} />
+            <div className={styles.bold}>{secondTitle}</div>
             <DownOutlined />
           </Button>
         </Space>
-        <Button className={styles.button} onClick={() => console.log(123)}>
+        <Button
+          className={styles.button}
+          onClick={() => setIsSwapPressed(true)}
+        >
           Swap
         </Button>
       </Space>
       <ModalForm
-        pickedCryptoItem={firstPickedCrypto?.title}
+        pickedCryptoItem={firstTitle}
         title="Choose a token"
         open={isFirstModalOpen}
         setPickedCrypto={setFirstPickedCrypto}
         onCancel={firstModalCancel}
       />
+
       <ModalForm
-        pickedCryptoItem={secondPickedCrypto?.title}
+        pickedCryptoItem={secondTitle}
         title="Choose a token"
         open={isSecondModalOpen}
         setPickedCrypto={setSecondPickedCrypto}
         onCancel={secondModalCancel}
+      />
+
+      <ModalSumbitForm
+        firstCrypto={filteredFirstCrypto[0]}
+        secondCrypto={filteredSecondCrypto[0]}
+        firstValue={firstInputValue}
+        secondValue={secondInputValue}
+        title="Confirm Swap"
+        open={isSwapPressed}
+        onCancel={swapModalCancel}
       />
     </div>
   );

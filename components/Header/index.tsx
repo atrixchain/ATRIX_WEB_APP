@@ -20,7 +20,7 @@ const Header = ({}: HeaderProps) => {
   useEffect(() => {
     checkWalletIsConnected;
   }, []);
-  
+
   const checkWalletIsConnected = async () => {
     const { ethereum }: any = window;
 
@@ -89,6 +89,9 @@ const Header = ({}: HeaderProps) => {
             )
           )}
         </div>
+        <Button className={styles.balance} onClick={connectWalletHandler}>
+          <div className={styles.balanceText}>5.000 ZP</div>
+        </Button>
         <Button className={styles.button} onClick={connectWalletHandler}>
           <div className={styles.buttonText}>Connect wallet</div>
         </Button>

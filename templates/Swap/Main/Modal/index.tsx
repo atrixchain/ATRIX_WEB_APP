@@ -27,7 +27,11 @@ const ModalForm = ({
     style={{
       borderRadius: "30px",
     }}
+    bodyStyle={{
+      borderRadius: "30px",
+    }}
     className={styles.modalStyle}
+    wrapClassName="modal-radius"
   >
     <Input
       className={styles.inputPlaceholder}

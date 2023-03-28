@@ -1,106 +1,109 @@
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import Link from "next/link";
-import cn from "classnames";
+import { Button, Divider, Space } from "antd";
+import { PropsWithChildren, ReactNode } from "react";
 import styles from "./Card.module.sass";
+import cn from "classnames";
+import ButtonComponents from "../Button/button";
+import { DownOutlined } from "@ant-design/icons";
 
 type CardProps = {
-    className?: string;
-    backgroundCardClass?: string;
-    squareCardClass?: string;
-    cornerCardClass?: string;
-    innerCardClass?: string;
-    color?: string;
-    url?: string;
-    children: React.ReactNode;
-    small?: boolean;
-    animateIn?: string;
-    style?: React.CSSProperties;
-    delay?: number;
+  title: string;
+  firstContent: string;
+  secondContent: string;
+  firstButtonTitle: string;
+  secondButtonTitle: string;
+  thirdButtonTitle: string;
+  green: boolean;
+  purple: boolean;
+  disabled: boolean;
+  isThirdButtonOpacity: boolean;
+  opacityText: string;
+  showButtons: boolean;
+  viewAllButtonTitle: string;
+  isEarnAtrixScreen: boolean;
 };
 
-const Card = ({
-    className,
-    backgroundCardClass,
-    squareCardClass,
-    cornerCardClass,
-    innerCardClass,
-    color,
-    url,
-    children,
-    small,
-    animateIn,
-    style,
-    delay,
+const text = "text";
+
+const AtrixCard = ({
+  title,
+  firstContent,
+  secondContent,
+  firstButtonTitle,
+  secondButtonTitle,
+  thirdButtonTitle,
+  green,
+  purple,
+  disabled,
+  isThirdButtonOpacity,
+  opacityText,
+  showButtons,
+  viewAllButtonTitle,
+  isEarnAtrixScreen,
 }: CardProps) => {
-    const inner = (
-        <>
-            <div className={cn(styles.background, backgroundCardClass)}></div>
-            <div
-                className={cn(styles.square, squareCardClass)}
-                style={{ backgroundColor: color || "#89EB5B" }}
-            ></div>
-            <svg
-                className={cn(styles.corner, cornerCardClass)}
-                preserveAspectRatio="none"
-                width="77"
-                height="124"
-                viewBox="0 0 77 124"
-            >
-                <path
-                    d={
-                        small
-                            ? "M35.453 9.373C29.455 3.371 21.32 0 12.839 0H.116C.113 0 .127 0 .16 0v100h76.956V64.314a32.01 32.01 0 0 0-9.368-22.627L35.453 9.373z"
-                            : "M77 124V78.231c0-8.489-3.371-16.629-9.373-22.632L21.388 9.35A32 32 0 0 0 0 0v124h77z"
-                    }
-                />
-            </svg>
-            <div className={cn(styles.inner, innerCardClass)}>{children}</div>
-        </>
-    );
-
-    return animateIn ? (
-        <AnimationOnScroll
-            className={cn(styles.card, { [styles.small]: small }, className)}
-            animateIn={animateIn}
-            style={style}
-            delay={delay}
-            animateOnce
+  return (
+    <Space
+      direction="horizontal"
+      className={!showButtons ? styles.cardFlexStart : styles.card}
+    >
+      <Space direction="vertical">
+        <div className={styles.title}>{title}</div>
+        <div
+          className={!showButtons ? styles.contextMaxWidth : styles.contentText}
         >
-            {url ? (
-                <Link href={url}>
-                    <a className={styles.link}>{inner}</a>
-                </Link>
-            ) : (
-                inner
-            )}
-        </AnimationOnScroll>
-    ) : (
-        <>
-            {url ? (
-                <Link href={url}>
-                    <a
-                        className={cn(
-                            styles.card,
-                            { [styles.small]: small },
-                            className
-                        )}
-                    >
-                        {inner}
-                    </a>
-                </Link>
-            ) : (
-                <div
-                    className={cn(
-                        styles.card,
-                        { [styles.small]: small },
-                        className
-                    )}
-                >
-                    {inner}
-                </div>
-            )}
-        </>
-    );
+          {firstContent}
+        </div>
+        {secondContent && (
+          <div className={styles.contentText}>{secondContent}</div>
+        )}
+        {viewAllButtonTitle && (
+          <Space direction="horizontal" className={styles.viewAllButton}>
+            <Button type="link" className={styles.viewAllButtonTitle}>
+              {viewAllButtonTitle}
+              <DownOutlined />
+            </Button>
+          </Space>
+        )}
+      </Space>
+      <Space direction="vertical">
+        {showButtons && (
+          <div className={styles.buttonContainer}>
+            <div className={styles.button}>
+              <ButtonComponents
+                type={""}
+                green={green}
+                title={firstButtonTitle}
+                purple={purple}
+                disable={false}
+              />
+            </div>
+            {isEarnAtrixScreen && <Divider />}
+            <div className={styles.button}>
+              <ButtonComponents
+                type={""}
+                green={green}
+                title={secondButtonTitle}
+                purple={purple}
+                disable={disabled}
+              />
+            </div>
+            <div className={styles.button}>
+              {isThirdButtonOpacity ? (
+                <div className={styles.opacityText}>{opacityText}</div>
+              ) : (
+                <ButtonComponents
+                  type={""}
+                  green={green}
+                  title={thirdButtonTitle}
+                  purple={purple}
+                  disable={disabled}
+                />
+              )}
+            </div>
+          </div>
+        )}
+      </Space>
+    </Space>
+  );
 };
 
-export default Card;
+export default AtrixCard;

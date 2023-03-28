@@ -1,21 +1,17 @@
-import { useRef } from "react";
 import Layout from "@/components/Layout";
 import Main from "./Main";
 import { Col, Row } from "antd";
 
-// import { reviews } from "@/mocks/reviews";
-
-const FaucetPage = () => {
-  const scrollToRef = useRef(null);
+const LeaderboardPage = () => {
   return (
     <Row>
       <Col span={24}>
         <Layout>
-          <Main scrollToRef={scrollToRef} />
+          <Main />
         </Layout>
       </Col>
     </Row>
   );
 };
 
-export default FaucetPage;
+export default LeaderboardPage;

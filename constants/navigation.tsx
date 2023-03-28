@@ -12,25 +12,25 @@ export const headerNavigation = [
 
   {
     title: "Get ATRIX",
-    url: "/swap",
+    url: "/getatrix",
     external: false,
   },
 
   {
     title: "Earn ATRIX Points",
-    url: "/swap",
+    url: "/earnatrix",
     external: false,
   },
 
   {
     title: "Leaderboard",
-    url: "/explorer",
+    url: "/leaderboard",
     external: false,
   },
   {
     title: "Explorer",
-    url: "/explorer",
-    external: false,
+    url: "https://explorer-testnet.atrixchain.com",
+    external: true,
   },
 ];
 

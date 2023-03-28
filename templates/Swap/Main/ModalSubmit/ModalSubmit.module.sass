@@ -5,26 +5,33 @@
     height: 50px
     font-size: 22px
 .button
-    margin-top: 30px
-    width: 550px
-    height: 50px
-    background-color: $c1
+    margin-top: 10px
+    width: 458px
+    height: 44px
+    background-color: $n12
     color: $n0
-    font-size: 16px
+    font-size: 18px
     +appBodyText
 .cryptos
     margin-top: 20px
-.buttonModal
-    height: 45px
-    width: 115px
-    background-color: $n0
-    border: 1px solid $n11
-    color: $n10
     display: flex
-    padding-left: 10px
-    justify-content: space-between
     align-items: center
-    border-radius: 17px
+    justify-content: space-between
+.swapOutput
+    height: 249px
+    width: 502px
+    border: 0.5px solid $n10
+    color: $n10
+    border-radius: 15px
+    display: flex
+    justify-content: center
+    margin-top: 50px
+    padding-top: 17px
+    margin-bottom: 30px
+
+.confirmInfo
+    display: flex
+    justify-content: space-between
 .select
     width: 150px
 
@@ -53,3 +60,26 @@
     font-size: 17px
 .itemName
     gap: 0px !important
+.value
+    +bold
+    +body3
+    color: $n10
+    padding-left: 15px
+.slippage
+    +body1
+    color: $n13
+.slippageValue
+    +body1
+    color: $n12
+.body
+    margin-top: 3px
+    +body
+.bodyText
+    +body
+    margin-top: 20px
+.bodyImpact
+    +body
+    color: $n12
+.questionButton
+    color: $n10
+    padding: 10px 0px
