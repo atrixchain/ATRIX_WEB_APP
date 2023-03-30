@@ -1,5 +1,6 @@
 import styles from "./YourInvites.module.sass";
-import { Button, Space } from "antd";
+import { Space } from "antd";
+import Button from "@/components/Button";
 type YourInvitesProps = {};
 
 const YourInvitesTable = ({}: YourInvitesProps) => (
@@ -9,9 +10,11 @@ const YourInvitesTable = ({}: YourInvitesProps) => (
         <div className={styles.bold}>Your Invites</div>
         <div className={styles.headerTotal}>Total Confirmed: 0</div>
       </Space>
-      <Button className={styles.button} onClick={() => console.log(123)}>
-        Invite to earn more ATRIX Points
-      </Button>
+      <Button
+        style={styles.button}
+        onClick={() => console.log(123)}
+        title={<div>Invite to earn more ATRIX Points</div>}
+      />
     </Space>
   </div>
 );

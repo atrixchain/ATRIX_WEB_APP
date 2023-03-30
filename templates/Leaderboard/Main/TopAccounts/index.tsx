@@ -1,6 +1,7 @@
 import styles from "./TopAccounts.module.sass";
-import { Button, Space } from "antd";
+import { Space } from "antd";
 import { topAccounts } from "@/mocks/topAccount";
+import Button from "@/components/Button";
 type TopAccountProps = {};
 
 const TopAccountsTable = ({}: TopAccountProps) => (
@@ -28,9 +29,12 @@ const TopAccountsTable = ({}: TopAccountProps) => (
           <div className={styles.pointDatas}>{account.points}</div>
         </Space>
       ))}
-      <Button type="link" className={styles.viewAllButton}>
-        View All Top Accounts
-      </Button>
+      <Button
+        type="link"
+        style={styles.viewAllButton}
+        title={<div>View All Top Accounts</div>}
+        onClick={() => console.log(123)}
+      />
     </Space>
   </div>
 );

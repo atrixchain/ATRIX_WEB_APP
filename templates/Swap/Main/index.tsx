@@ -1,13 +1,14 @@
 import cn from "classnames";
 import styles from "./Main.module.sass";
 import Image from "@/components/Image";
-import { Button, InputNumber, Space } from "antd";
+import { Alert, InputNumber, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 import ModalForm from "./Modal";
 import { SetStateAction, useState } from "react";
 import ModalSumbitForm from "./ModalSubmit";
 import { cryptos } from "@/mocks/cryptos";
+import Button from "@/components/Button";
 
 interface pickedCrypto {
   title: string;
@@ -92,12 +93,21 @@ const Main = ({}: MainProps) => {
             <Button
               type="primary"
               onClick={showFirstModal}
-              className={styles.buttonModal}
-            >
-              <Image src={firstImage} width={35} height={35} alt={firstImage} />
-              <div className={styles.bold}>{firstTitle}</div>
-              <DownOutlined />
-            </Button>
+              style={styles.buttonModal}
+              title={
+                <Space direction="horizontal">
+                  <Image
+                    src={firstImage}
+                    width={37}
+                    height={37}
+                    alt={firstImage}
+                  />
+                  <div className={styles.bold}>{firstTitle}</div>
+                  <DownOutlined />
+                </Space>
+              }
+            />
+
             <Image src={swap} width={25} height={25} />
           </Space>
         </Space>
@@ -112,20 +122,37 @@ const Main = ({}: MainProps) => {
           <Button
             type="primary"
             onClick={showSecondModal}
-            className={styles.buttonModal}
-          >
-            <Image src={secondImage} width={35} height={35} alt={secondTitle} />
-            <div className={styles.bold}>{secondTitle}</div>
-            <DownOutlined />
-          </Button>
+            style={styles.buttonModal}
+            title={
+              <Space direction="horizontal">
+                <Image
+                  src={secondImage}
+                  width={37}
+                  height={37}
+                  alt={secondTitle}
+                />
+                <div className={styles.bold}>{secondTitle}</div>
+                <DownOutlined />
+              </Space>
+            }
+          />
         </Space>
+        {secondTitle === firstTitle && (
+          <Alert
+            className={styles.alert}
+            description="Can't choose the same crypto"
+            type="warning"
+            showIcon
+          />
+        )}
+
         <Button
-          className={styles.button}
+          style={styles.button}
           onClick={() => setIsSwapPressed(true)}
-        >
-          Swap
-        </Button>
+          title={<div>Swap</div>}
+        />
       </Space>
+
       <ModalForm
         pickedCryptoItem={firstTitle}
         title="Choose a token"

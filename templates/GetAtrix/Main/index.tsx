@@ -20,7 +20,6 @@ const Main = ({}: MainProps) => (
     <Space direction="vertical">
       <div>
         <Card
-          green
           title={REQUEST_TESTNET}
           firstContent={REQUEST_TESTNET_TEXT}
           secondContent={""}
@@ -28,17 +27,17 @@ const Main = ({}: MainProps) => (
           secondButtonTitle={CONNECT_WALLET_TEXT}
           thirdButtonTitle={""}
           isThirdButtonOpacity={true}
-          purple={false}
           showButtons={true}
-          disabled={false}
           opacityText={REQUEST_DISCORD_TEXT}
           viewAllButtonTitle={""}
           isEarnAtrixScreen={false}
+          firstButtonPurple={false}
+          secondButtonPurple={false}
+          thirdButtonPurple={false}
         />
       </div>
       <div className={styles.card}>
         <Card
-          green
           title={DETAILS}
           firstContent={REQUEST_EVERY_TEXT}
           secondContent={""}
@@ -46,12 +45,13 @@ const Main = ({}: MainProps) => (
           secondButtonTitle={CONNECT_WALLET_TEXT}
           thirdButtonTitle={""}
           isThirdButtonOpacity={true}
-          purple={false}
-          disabled={false}
           showButtons={false}
           opacityText={REQUEST_DISCORD_TEXT}
           viewAllButtonTitle={VIEW_ALL_NETWORK}
           isEarnAtrixScreen={false}
+          firstButtonPurple={false}
+          secondButtonPurple={false}
+          thirdButtonPurple={false}
         />
       </div>
     </Space>

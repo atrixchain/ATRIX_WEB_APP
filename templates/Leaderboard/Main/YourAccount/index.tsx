@@ -1,5 +1,6 @@
 import styles from "./YourAccount.module.sass";
-import { Button, Space } from "antd";
+import { Space } from "antd";
+import Button from "@/components/Button";
 
 interface YourAccountProps {}
 
@@ -19,9 +20,11 @@ const YourAccountTable = ({}: YourAccountProps) => {
           <div className={styles.name}>@Henry102</div>
           <div className={styles.status}>disconnect</div>
         </Space>
-        <Button className={styles.button} onClick={() => console.log(123)}>
-          Connect Wallet
-        </Button>
+        <Button
+          style={styles.button}
+          onClick={() => console.log(123)}
+          title={<div>Connect Wallet</div>}
+        />
       </Space>
     </div>
   );

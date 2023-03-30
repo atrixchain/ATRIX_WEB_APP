@@ -1,8 +1,8 @@
-import { Button, Divider, Space } from "antd";
+import { Divider, Space } from "antd";
 import { PropsWithChildren, ReactNode } from "react";
 import styles from "./Card.module.sass";
 import cn from "classnames";
-import ButtonComponents from "../Button/button";
+import Button from "../Button";
 import { DownOutlined } from "@ant-design/icons";
 
 type CardProps = {
@@ -12,17 +12,15 @@ type CardProps = {
   firstButtonTitle: string;
   secondButtonTitle: string;
   thirdButtonTitle: string;
-  green: boolean;
-  purple: boolean;
-  disabled: boolean;
   isThirdButtonOpacity: boolean;
   opacityText: string;
   showButtons: boolean;
   viewAllButtonTitle: string;
   isEarnAtrixScreen: boolean;
+  firstButtonPurple: boolean;
+  secondButtonPurple: boolean;
+  thirdButtonPurple: boolean;
 };
-
-const text = "text";
 
 const AtrixCard = ({
   title,
@@ -31,14 +29,14 @@ const AtrixCard = ({
   firstButtonTitle,
   secondButtonTitle,
   thirdButtonTitle,
-  green,
-  purple,
-  disabled,
   isThirdButtonOpacity,
   opacityText,
   showButtons,
   viewAllButtonTitle,
   isEarnAtrixScreen,
+  firstButtonPurple,
+  secondButtonPurple,
+  thirdButtonPurple,
 }: CardProps) => {
   return (
     <Space
@@ -57,45 +55,47 @@ const AtrixCard = ({
         )}
         {viewAllButtonTitle && (
           <Space direction="horizontal" className={styles.viewAllButton}>
-            <Button type="link" className={styles.viewAllButtonTitle}>
-              {viewAllButtonTitle}
-              <DownOutlined />
-            </Button>
+            <Button
+              style={styles.viewAllButtonTitle}
+              onClick={() => console.log(123)}
+              title={
+                <div>
+                  {viewAllButtonTitle}
+                  <DownOutlined />
+                </div>
+              }
+              type={"link"}
+            />
           </Space>
         )}
       </Space>
       <Space direction="vertical">
         {showButtons && (
           <div className={styles.buttonContainer}>
-            <div className={styles.button}>
-              <ButtonComponents
-                type={""}
-                green={green}
-                title={firstButtonTitle}
-                purple={purple}
-                disable={false}
-              />
-            </div>
+            <Button
+              style={firstButtonPurple ? styles.buttonPurple : styles.button}
+              onClick={() => console.log(123)}
+              title={<div>{firstButtonTitle}</div>}
+              type={"primary"}
+            />
             {isEarnAtrixScreen && <Divider />}
-            <div className={styles.button}>
-              <ButtonComponents
-                type={""}
-                green={green}
-                title={secondButtonTitle}
-                purple={purple}
-                disable={disabled}
-              />
-            </div>
-            <div className={styles.button}>
+            <Button
+              style={secondButtonPurple ? styles.buttonPurple : styles.button}
+              onClick={() => console.log(123)}
+              title={<div>{secondButtonTitle}</div>}
+              type={"primary"}
+            />
+            <div>
               {isThirdButtonOpacity ? (
                 <div className={styles.opacityText}>{opacityText}</div>
               ) : (
-                <ButtonComponents
-                  type={""}
-                  green={green}
-                  title={thirdButtonTitle}
-                  purple={purple}
-                  disable={disabled}
+                <Button
+                  style={
+                    thirdButtonPurple ? styles.buttonPurple : styles.button
+                  }
+                  onClick={() => console.log(123)}
+                  title={<div>{thirdButtonTitle}</div>}
+                  type={"primary"}
                 />
               )}
             </div>

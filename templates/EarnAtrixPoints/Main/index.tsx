@@ -18,7 +18,6 @@ const Main = ({}: MainProps) => (
     <Space direction="vertical">
       <div className={styles.card}>
         <Card
-          green={false}
           title={EARN_ATRIX}
           firstContent={INVITE_USING_LINK}
           secondContent={INVITE_FOR_EACH_PERSON}
@@ -26,12 +25,13 @@ const Main = ({}: MainProps) => (
           secondButtonTitle={SHARE_TW}
           thirdButtonTitle={COPY_LINK}
           isThirdButtonOpacity={false}
-          purple={false}
-          disabled={true}
           showButtons={true}
           opacityText={""}
           viewAllButtonTitle={""}
           isEarnAtrixScreen={true}
+          firstButtonPurple={false}
+          secondButtonPurple={false}
+          thirdButtonPurple={false}
         />
       </div>
     </Space>

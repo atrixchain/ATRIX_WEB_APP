@@ -80,7 +80,35 @@
     font-weight: 700
     color: $n0
 .button
+    display: flex
+    align-items: center
+    justify-content: center
     margin-bottom: 10px
+    width: 659px
+    height: 44px
+    border-radius: 5px
+    background: $n12
+    color: $n0
+    font-weight: 500
+    padding-top: 5px
+    padding-left: 0px
+    +body2
+    &:hover
+        background-color: $n11 !important
+.buttonPurple
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-bottom: 10px
+    width: 659px
+    height: 44px
+    border-radius: 5px
+    background: $n13
+    font-weight: 700
+    color: $n0
+    +body2
+    &:hover
+        background-color: $n11 !important
 .opacityText
     +body2
     font-weight: 400
