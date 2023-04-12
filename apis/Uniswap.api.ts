@@ -1,5 +1,5 @@
 import httpClient from "lib/axios";
-import { IAddFaucetParams, IAddFaucetResponse } from "./Faucet.type";
+import { IAddFaucetParams, IAddFaucetResponse } from "./Uniswap.type";
 
 const BASE_URL = "/";
 

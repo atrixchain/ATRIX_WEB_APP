@@ -50,7 +50,13 @@ const ModalForm = ({
               onCancel();
             }}
           >
-            <Image src={item.image} width={35} height={35} alt={item.image} />
+            <Image
+              src={item.image}
+              width={35}
+              height={35}
+              alt={item.image}
+              style={{ borderRadius: 30 }}
+            />
             <div className={styles.bold}> {item.title}</div>
           </Button>
         ))}
@@ -61,7 +67,13 @@ const ModalForm = ({
         renderItem={(item, index) => (
           <List.Item key={index}>
             <Space direction="horizontal">
-              <Image src={item.image} width={45} height={45} alt="Post" />
+              <Image
+                src={item.image}
+                width={45}
+                height={45}
+                alt="Post"
+                style={{ borderRadius: 30 }}
+              />
               <Space direction="vertical" className={styles.itemName}>
                 <div className={styles.bold}>{item.name}</div>
                 <div className={styles.fade}>{item.title}</div>

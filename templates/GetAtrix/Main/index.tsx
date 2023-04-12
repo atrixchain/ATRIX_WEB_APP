@@ -11,7 +11,7 @@ import {
   REQUEST_TESTNET,
   REQUEST_TESTNET_TEXT,
   VIEW_ALL_NETWORK,
-} from "@/utils/commom";
+} from "@/constants/commom";
 
 type MainProps = {};
 

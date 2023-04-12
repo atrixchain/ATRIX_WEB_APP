@@ -46,7 +46,15 @@
 .menu
     margin-right: auto
     margin-left: 15em
+    +xxl
+        margin-left: 8em
+    +xl
+        margin-left: 4em
+    +w
+        margin-left: 40px
     +t
+        display: none
+    +m
         display: none
 
 .link
@@ -61,9 +69,16 @@
         color: $n0
     &:not(:last-child)
         margin-right: 48px
+        +xxl
+            margin-right: 48px
+        +xl
+            margin-right: 48px
+        +w
+            margin-right: 30px
+        +t
+            display: none
 .balance
     display: flex
-    width: 94px
     height: 30px
     background: $n16
     border-radius: 5px

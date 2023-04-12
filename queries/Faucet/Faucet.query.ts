@@ -1,9 +1,9 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
-import { FaucetApis } from "apis/Faucet.api";
-import { IAddFaucetParams } from "apis/Faucet.type";
+import { FaucetApis } from "apis/Uniswap.api";
+import { IAddFaucetParams } from "apis/Uniswap.type";
 import { queryClient } from "lib/react-query";
 import { isEmpty } from "lodash";
-import { useFaucetStore } from "stores/faucet.store";
+import { useFaucetStore } from "stores/uniswap.store";
 
 const FAUCET_CACHE_KEYS = {
   add_wallet: "add_wallet",

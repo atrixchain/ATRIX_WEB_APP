@@ -23,7 +23,8 @@
             "@/hooks/*": ["hooks/*"],
             "@/types/*": ["types/*"],
             "@/constants/*": ["constants/*"],
-            "@/mocks/*": ["mocks/*"]
+            "@/mocks/*": ["mocks/*"],
+            "@/helpers/*": ["helpers/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

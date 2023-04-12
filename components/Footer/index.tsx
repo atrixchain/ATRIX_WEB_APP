@@ -4,9 +4,9 @@ import styles from "./Footer.module.sass";
 import Logo from "@/components/Logo";
 import NavLink from "@/components/NavLink";
 import Socials from "@/components/Socials";
-import { APP_NAME } from "@/utils/commom";
-import { footerNavigation, documents } from "@/constants/navigation";
-import { socials } from "@/constants/socials";
+import { APP_NAME } from "@/constants/commom";
+import { footerNavigation, documents } from "@/constants/navigation.const";
+import { socials } from "@/constants/socials.const";
 
 type FooterProps = {
   FooterApp: boolean;

@@ -1,7 +1,7 @@
 import cn from "classnames";
 import styles from "./Main.module.sass";
 import { Button, Input, Space } from "antd";
-import { ENTER_WALLET_TEXT } from "@/utils/commom";
+import { ENTER_WALLET_TEXT } from "@/constants/commom";
 
 type MainProps = {
   scrollToRef: any;

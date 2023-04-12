@@ -38,5 +38,17 @@ export const cryptos = [
     title: "AVAX",
     name: "Avalanche",
     image: "/cryptos/AVAX.svg",
-  }, 
+  },
+
+  {
+    title: "MTK",
+    name: "My Token",
+    image: "/images/atrix.jpeg",
+  },
+
+  {
+    title: "MTK2",
+    name: "My Token 2",
+    image: "/images/atrix.jpeg",
+  },
 ];

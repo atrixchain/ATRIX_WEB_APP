@@ -9,7 +9,7 @@ import {
   INVITE_USING_LINK,
   SHARE_TW,
   VERIFY_TW_BUTTON,
-} from "@/utils/commom";
+} from "@/constants/commom";
 
 type MainProps = {};
 

@@ -1,16 +1,15 @@
 import cn from "classnames";
 import styles from "./Header.module.sass";
 import Logo from "@/components/Logo";
-
-import { headerNavigation } from "@/constants/navigation";
+import { headerNavigation } from "@/constants/navigation.const";
 import NavLink from "../NavLink";
 import { notification } from "antd";
-import { ethers } from "ethers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button";
-const contractAddress = "0x355638a4eCcb777794257f22f50c289d4189F245";
+const { ethers } = require("ethers");
+import { getMTKContract, getWethContract } from "@/helpers/AlphaRouterService";
+import { useUniswapStore } from "stores/uniswap.store";
 interface HeaderProps {}
-
 type NotificationType = "success" | "info" | "warning" | "error";
 
 export enum ToastifyStatus {
@@ -19,13 +18,111 @@ export enum ToastifyStatus {
   WARNING = "warning",
   ERROR = "error",
 }
+
 const Header = ({}: HeaderProps) => {
-  const [currentAccount, setCurrentAccount] = useState(null);
+  const [provider, setProvider] = useState(undefined);
+  const [signer, setSigner] = useState(undefined);
+  const [signerAddress, setSignerAddress] = useState<any>(undefined);
+
+  const [wethContract, setWethContract] = useState(undefined);
+  const [uniContract, setUniContract] = useState(undefined);
+  const [wethAmount, setWethAmount] = useState(undefined);
+
+  const [uniAmount, setUniAmount] = useState(0);
   const [api, contextHolder] = notification.useNotification();
+  const { setAddedProvider, setAddedWallet, setAddedSigner, setIsConnected } =
+    useUniswapStore();
 
-  console.log("currentAccount", currentAccount);
+  useEffect(() => {
+    const init = async () => {
+      await onLoad();
+    };
+    init();
+  }, []);
 
-  const openNotification = (
+  const onLoad = async () => {
+    const { ethereum }: any = window;
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    setProvider(provider);
+    setAddedProvider(provider);
+
+    if (!ethereum) {
+      openNotification("Please install MetaMask", "", ToastifyStatus.WARNING);
+      return;
+    } else {
+      console.log("Wallet exists! We're ready to go!");
+    }
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+
+    if (accounts.length !== 0) {
+      const account = accounts[0];
+      console.log("Found an authorized account: ", account);
+      setAddedWallet(account);
+      setSignerAddress(account);
+      getSigner(provider);
+    } else {
+      console.log("No authorized account found");
+    }
+
+    const uniContract = await getMTKContract();
+    setUniContract(uniContract);
+  };
+  const isConnected = () => signer !== undefined;
+
+  const getSigner = async (provider: any) => {
+    await provider?.send("eth_requestAccounts", []);
+    const signer = await provider?.getSigner();
+    setSigner(signer);
+    setAddedSigner(signer);
+
+    signer.getAddress().then((address: any) => {
+      setSignerAddress(address);
+      setAddedWallet(address);
+    });
+  };
+
+  const getWalletAddress = (signer: any, uniContract: any) => {
+    {
+      isConnected()
+        ? signer.getAddress().then((address: any) => {
+            setSignerAddress(address);
+            setAddedWallet(address);
+            // todo: connect weth and uni contracts
+            uniContract.balanceOf(address).then((res: any) => {
+              setUniAmount(ethers.utils.formatEther(res));
+            });
+          })
+        : null;
+    }
+  };
+  useEffect(() => {
+    if (signer !== undefined) {
+      getWalletAddress(signer, uniContract);
+      setIsConnected(true);
+    }
+  }, [signer, uniContract]);
+
+  const displayAddress =
+    signerAddress !== undefined
+      ? `${String(signerAddress).substring(0, 10)}...`
+      : "Connected";
+
+  const connectWalletHandler = async () => {
+    const { ethereum }: any = window;
+
+    if (!ethereum) {
+      openNotification("Please install MetaMask", "", ToastifyStatus.WARNING);
+    }
+
+    try {
+      await getSigner(provider);
+      openNotification("Connected", "", ToastifyStatus.SUCCESS);
+    } catch (err) {
+      openNotification("Failed to Connect", "", ToastifyStatus.ERROR);
+    }
+  };
+
+  const openNotification = async (
     message: string,
     description: string,
     type: NotificationType
@@ -34,25 +131,6 @@ const Header = ({}: HeaderProps) => {
       message: message,
       description: description || "",
     });
-  };
-
-  const connectWalletHandler = async () => {
-    const { ethereum }: any = window;
-
-    if (!ethereum) {
-      openNotification("Please install Metamask!", "", ToastifyStatus.WARNING);
-    }
-
-    try {
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      openNotification("Wallet connected", accounts[0], ToastifyStatus.SUCCESS);
-      console.log("Found an account! Address: ", accounts[0]);
-      setCurrentAccount(accounts[0]);
-    } catch (err) {
-      openNotification("No authorized account found", "", ToastifyStatus.ERROR);
-    }
   };
 
   return (
@@ -88,13 +166,22 @@ const Header = ({}: HeaderProps) => {
         <Button
           style={styles.balance}
           onClick={() => console.log(123)}
-          title={<div>5.000 ZP</div>}
+          title={
+            <div>{`${
+              !uniAmount ? "Loading..." : Number(uniAmount).toFixed(1)
+            } ATR`}</div>
+          }
           type={"primary"}
         />
+
         <Button
           style={styles.button}
           onClick={connectWalletHandler}
-          title={<div>Connect wallet</div>}
+          title={
+            <div>
+              {signerAddress !== undefined ? displayAddress : "Connect wallet"}
+            </div>
+          }
           type={"primary"}
         />
       </div>

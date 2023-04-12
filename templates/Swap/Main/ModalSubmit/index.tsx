@@ -1,6 +1,8 @@
 import styles from "./ModalSubmit.module.sass";
 import Image from "@/components/Image";
 import { Button, Space, Modal } from "antd";
+import { runSwap } from "@/helpers/AlphaRouterService";
+import { useUniswapStore } from "stores/uniswap.store";
 
 interface crypto {
   title: string;
@@ -12,10 +14,10 @@ interface ModalProps {
   title: string;
   firstCrypto: crypto;
   secondCrypto: crypto;
-  firstValue?: number;
-  secondValue?: number;
   open: boolean;
   onCancel: VoidFunction;
+  transaction: object;
+  swapInfo:any;
 }
 
 const ModalSumbitForm = ({
@@ -24,15 +26,26 @@ const ModalSumbitForm = ({
   onCancel,
   firstCrypto,
   secondCrypto,
-  firstValue,
-  secondValue,
+  transaction,
+  swapInfo
 }: ModalProps) => {
+  const {
+    slippageAmount,
+    inputAmount,
+    outputAmount,
+    firstPickedCrypto,
+    secondPickedCrypto,
+    midPrice
+  } = swapInfo;
   const { title: firstTitle, image: firstImage } = firstCrypto;
 
   const { title: secondTitle, image: secondImage } = secondCrypto;
 
   const imagePixel = 50;
   const iconPixel = 16;
+
+  const { addedSigner } = useUniswapStore();
+
   return (
     <Modal
       title={title}
@@ -54,8 +67,9 @@ const ModalSumbitForm = ({
               width={imagePixel}
               height={imagePixel}
               alt={firstImage}
+              style={{ borderRadius: 30 }}
             />
-            <div className={styles.value}>{firstValue}</div>
+            <div className={styles.value}>{inputAmount}</div>
           </Space>
 
           <div className={styles.value}> {firstTitle}</div>
@@ -67,26 +81,34 @@ const ModalSumbitForm = ({
               width={imagePixel}
               height={imagePixel}
               alt={firstImage}
+              style={{ borderRadius: 30 }}
             />
-            <div className={styles.value}>{secondValue}</div>
+            <div className={styles.value}>{outputAmount}</div>
           </Space>
           <div className={styles.value}> {secondTitle}</div>
         </Space>
         <Space direction="horizontal" className={styles.cryptos}>
           <div className={styles.slippage}>{"SLIPPAGE TOLERANCE"}</div>
-          <div className={styles.slippageValue}> {"0.50%"}</div>
+          <div className={styles.slippageValue}> {slippageAmount} %</div>
         </Space>
-        <div className={styles.bodyText}>
-          {"Output is estimated. You will receive at least"}
-          {"\n"}
-          {"0.0000107119 USTD or the transaction will revert."}
-        </div>
+        <Space direction="vertical" style={{ marginTop: "15px" }}>
+          <div className={styles.bodyText}>
+            {"Output is estimated. You will receive at least"}
+          </div>
+          <div className={styles.bodyText}>
+            {`${outputAmount} ATR or the transaction will revert.`}
+          </div>
+        </Space>
+
         <div className={styles.swapOutput}>
           <Space direction="vertical">
             <Space direction="horizontal" className={styles.confirmInfo}>
               <div className={styles.body}>{"Price"}</div>
               <Space direction="horizontal" className={styles.confirmInfo}>
-                <div className={styles.body}> {"0.000120616 USTD/ETH"}</div>
+                <div className={styles.body}>
+                  {" "}
+                  {`${outputAmount} ${firstPickedCrypto}/${secondPickedCrypto}`}
+                </div>
                 <Button
                   className={styles.questionButton}
                   type="link"
@@ -118,7 +140,7 @@ const ModalSumbitForm = ({
                 </Button>
               </Space>
 
-              <div className={styles.body}> {"0.00001075 USDT"}</div>
+              <div className={styles.body}> {`${outputAmount} ATR`}</div>
             </Space>
             <Space direction="horizontal" className={styles.confirmInfo}>
               <Space direction="horizontal" className={styles.confirmInfo}>
@@ -156,9 +178,12 @@ const ModalSumbitForm = ({
                 </Button>
               </Space>
 
-              <div className={styles.body}> {"0.000447549 ETH"}</div>
+              <div className={styles.body}> {`${midPrice} ${secondPickedCrypto}`}</div>
             </Space>
-            <Button className={styles.button} onClick={() => console.log(123)}>
+            <Button
+              className={styles.button}
+              onClick={() => runSwap(transaction, addedSigner)}
+            >
               Confirm Swap
             </Button>
           </Space>
