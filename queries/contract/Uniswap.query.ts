@@ -3,7 +3,7 @@ import { FaucetApis } from "apis/Uniswap.api";
 import { IAddFaucetParams } from "apis/Uniswap.type";
 import { queryClient } from "lib/react-query";
 import { isEmpty } from "lodash";
-import { useFaucetStore } from "stores/uniswap.store";
+// import { useFaucetStore } from "stores/uniswap.store";
 
 const UNISWAP_CACHE_KEYS = {
   GET_PROVIDER: "GET_PROVIDER",
