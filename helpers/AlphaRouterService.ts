@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { Fetcher, Route, Token, TokenAmount, Trade, TradeType } from "../sdk";
 const { ethers } = require("ethers");
 import ERC20ABI from "../abi.json";
@@ -6,9 +5,6 @@ import routerABI from "../router.abi.json";
 
 const V3_SWAP_ROUTER_ADDRESS = "0xC6F1Ea85655Fd0cACAB491b7569285A5B6Db1789";
 const REACT_APP_TESTNET = "https://testnet.atrixchain.com/";
-console.log("V3_SWAP_ROUTER_ADDRESS", V3_SWAP_ROUTER_ADDRESS);
-
-console.log("REACT_APP_TESTNET", REACT_APP_TESTNET);
 
 const chainId = 266;
 
@@ -53,8 +49,6 @@ export const getPrice = async (
   provider: any
 ) => {
   try {
-    console.log("provider", provider);
-
     const { ethereum }: any = window;
     if (ethereum) {
       const wei = ethers.utils.parseEther(inputAmount.toString());
@@ -73,7 +67,7 @@ export const getPrice = async (
       );
 
       const executionPrice = trade.executionPrice.toSignificant(6);
-      const nextMidPrice = trade.nextMidPrice.toSignificant(6)
+      const nextMidPrice = trade.nextMidPrice.toSignificant(6);
 
       const transaction = {
         amountIn: ethers.utils.parseEther(inputAmount.toString()),
@@ -99,7 +93,6 @@ export const runSwap = async (transaction: any, signer: any) => {
       const contract0 = await getRouterContract(signer);
       const { tokenIn, tokenOut, amountIn, amountOutMin, deadline } =
         transaction;
-
       const tx = await contract0.swapExactTokensForTokens(
         amountIn,
         amountOutMin,

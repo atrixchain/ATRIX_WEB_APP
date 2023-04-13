@@ -17,7 +17,7 @@ interface ModalProps {
   open: boolean;
   onCancel: VoidFunction;
   transaction: object;
-  swapInfo:any;
+  swapInfo: any;
 }
 
 const ModalSumbitForm = ({
@@ -27,7 +27,7 @@ const ModalSumbitForm = ({
   firstCrypto,
   secondCrypto,
   transaction,
-  swapInfo
+  swapInfo,
 }: ModalProps) => {
   const {
     slippageAmount,
@@ -35,7 +35,7 @@ const ModalSumbitForm = ({
     outputAmount,
     firstPickedCrypto,
     secondPickedCrypto,
-    midPrice
+    midPrice,
   } = swapInfo;
   const { title: firstTitle, image: firstImage } = firstCrypto;
 
@@ -178,7 +178,10 @@ const ModalSumbitForm = ({
                 </Button>
               </Space>
 
-              <div className={styles.body}> {`${midPrice} ${secondPickedCrypto}`}</div>
+              <div className={styles.body}>
+                {" "}
+                {`${midPrice} ${secondPickedCrypto}`}
+              </div>
             </Space>
             <Button
               className={styles.button}
