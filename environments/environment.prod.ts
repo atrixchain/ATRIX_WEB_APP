@@ -1,6 +1,6 @@
 import { IEnvironment } from "./IEnvironment";
 
-const API_PROD = "http://13.212.81.40:3000" || "";
+const API_PROD = process.env.NEXT_PUBLIC_API_PROD || "";
 
 export const environment: IEnvironment = {
   production: true,

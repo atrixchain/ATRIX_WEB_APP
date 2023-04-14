@@ -3,7 +3,7 @@
 
 import { IEnvironment } from "./IEnvironment";
 
-const API_LOCAL = "https://13.212.81.40:3000" || "";
+const API_LOCAL = process.env.NEXT_PUBLIC_API_LOCAL || "";
 console.log("API_LOCAL", API_LOCAL);
 
 export const environment: IEnvironment = {
