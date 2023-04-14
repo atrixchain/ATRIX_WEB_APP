@@ -34,6 +34,7 @@ const Main = ({}: MainProps) => (
           firstButtonPurple={false}
           secondButtonPurple={false}
           thirdButtonPurple={false}
+          disable={false}
         />
       </div>
       <div className={styles.card}>
@@ -52,6 +53,7 @@ const Main = ({}: MainProps) => (
           firstButtonPurple={false}
           secondButtonPurple={false}
           thirdButtonPurple={false}
+          disable={false}
         />
       </div>
     </Space>
