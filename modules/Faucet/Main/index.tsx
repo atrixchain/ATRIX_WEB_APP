@@ -5,8 +5,7 @@ import { Button, Input, notification, Space } from "antd";
 import { ENTER_WALLET_TEXT } from "@/constants/commom";
 import { useAddFaucet } from "queries/Faucet/Faucet.query";
 import { openNotification } from "@/helpers/pushNotification";
-import axios from "axios";
-
+import axios, { AxiosResponse } from "axios";
 type MainProps = {
   scrollToRef: any;
 };
@@ -30,7 +29,7 @@ const Main = ({}: MainProps) => {
     onSuccess: handleAddFaucetSuccess,
     onError: handleFaucetError,
   });
-  const [addedFaucet, setAddedFaucet] = useState<string>("");
+  const [addedFaucet, setAddedFaucet] = useState<any>(null);
 
   const handleAddFaucet = () => {
     if(addedFaucet === "") {

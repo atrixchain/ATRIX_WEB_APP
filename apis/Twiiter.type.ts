@@ -1,5 +1,7 @@
 export type ITwiiterParams = {
-  point: number;
+  wallet_address?: string;
+  ref_address?: string;
+  data?: any;
 };
 export type IGetTwiiterInfo = {
   wallet_address: any;

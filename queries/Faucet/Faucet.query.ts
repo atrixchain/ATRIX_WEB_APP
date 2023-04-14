@@ -26,4 +26,3 @@ export const useAddFaucet = ({ onSuccess, onError }: IQueryProps) => {
     }
   );
 };
-

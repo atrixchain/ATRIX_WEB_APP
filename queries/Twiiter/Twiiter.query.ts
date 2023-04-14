@@ -1,3 +1,4 @@
+import { ITwiiterParams } from './../../apis/Twiiter.type';
 import { useUniswapStore } from "stores/uniswap.store";
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { TwiiterApis } from "apis/Twiiter.api";
@@ -18,7 +19,7 @@ export const useGetInfo = () => {
   const { setPoints } = useTwiiterStore();
   return useMutation(
     [TWIITER_CACHE_KEYS.get_info],
-    (data: any) => TwiiterApis.getInfo(data),
+    (data: ITwiiterParams) => TwiiterApis.getInfo(data),
     {
       onSuccess: (result: any) => setPoints(result?.data?.data.point.point),
     }
