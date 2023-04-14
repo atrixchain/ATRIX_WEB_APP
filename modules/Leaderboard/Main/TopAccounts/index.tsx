@@ -2,9 +2,11 @@ import styles from "./TopAccounts.module.sass";
 import { Space } from "antd";
 import { topAccounts } from "@/mocks/topAccount";
 import Button from "@/components/Button";
-type TopAccountProps = {};
+type TopAccountProps = {
+  topPoint: any;
+};
 
-const TopAccountsTable = ({}: TopAccountProps) => (
+const TopAccountsTable = ({ topPoint }: TopAccountProps) => (
   <div className={styles.topAccountTable}>
     <Space direction="vertical">
       <Space direction="horizontal" className={styles.tableHeader}>
@@ -19,16 +21,23 @@ const TopAccountsTable = ({}: TopAccountProps) => (
         <div className={styles.addressColumn}>Address</div>
         <div>ATRIX Points</div>
       </Space>
-      {topAccounts.map((account, index) => (
-        <Space direction="horizontal" className={styles.table} key={index}>
-          <Space direction="horizontal" className={styles.name}>
-            <div className={styles.nameIndexColumn}>{account.index}</div>
-            <div>{account.name}</div>
+      {topPoint &&
+        topPoint.slice(0, 5).map((account: any, index: number) => (
+          <Space
+            direction="horizontal"
+            className={styles.table}
+            key={index}
+            wrap
+          >
+            <Space direction="horizontal" className={styles.name}>
+              <div className={styles.nameIndexColumn}>{index + 1}</div>
+              <div className={styles.userColumn}>{"User"}</div>
+            </Space>
+            <Space></Space>
+            <div className={styles.walletColumn}>{account.wallet_address}</div>
+            <div className={styles.pointDatas}>{account.point}</div>
           </Space>
-          <div className={styles.addressColumnData}>{account.address}</div>
-          <div className={styles.pointDatas}>{account.points}</div>
-        </Space>
-      ))}
+        ))}
       <Button
         type="link"
         style={styles.viewAllButton}

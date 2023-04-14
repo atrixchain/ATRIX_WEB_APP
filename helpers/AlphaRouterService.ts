@@ -51,7 +51,7 @@ export const getPrice = async (
   try {
     const { ethereum }: any = window;
     if (ethereum) {
-      const wei = ethers.utils.parseEther(inputAmount.toString());
+      const wei = await ethers.utils.parseEther(inputAmount.toString());
 
       const pair = await Fetcher.fetchPairData(
         firstSymbol === "MTK" ? MTK : MTK2,

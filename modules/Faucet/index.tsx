@@ -3,8 +3,6 @@ import Layout from "@/components/Layout";
 import Main from "./Main";
 import { Col, Row } from "antd";
 
-// import { reviews } from "@/mocks/reviews";
-
 const FaucetPage = () => {
   const scrollToRef = useRef(null);
   return (

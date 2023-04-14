@@ -23,4 +23,6 @@ export const topAccounts = [
     address: "0x117439E571556Ca211F443f4fc724c85A8e1d28d",
     points: "24,508,500",
   },
+
+
 ];

@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Faucet from "@/templates/Faucet";
+import Faucet from "modules/Faucet";
 
 const Home: NextPage = () => {
   return <Faucet />;

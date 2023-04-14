@@ -9,6 +9,11 @@ import Button from "../Button";
 const { ethers } = require("ethers");
 import { getMTKContract, getWethContract } from "@/helpers/AlphaRouterService";
 import { useUniswapStore } from "stores/uniswap.store";
+import { openNotification } from "@/helpers/pushNotification";
+import { useGetInfo, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
+import { useTwiiterStore } from "stores/twiiter.store";
+import axios from "axios";
+import Loading from "../Loading";
 interface HeaderProps {}
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -47,7 +52,12 @@ const Header = ({}: HeaderProps) => {
     setAddedProvider(provider);
 
     if (!ethereum) {
-      openNotification("Please install MetaMask", "", ToastifyStatus.WARNING);
+      openNotification(
+        "Please install MetaMask",
+        "",
+        ToastifyStatus.WARNING,
+        api
+      );
       return;
     } else {
       console.log("Wallet exists! We're ready to go!");
@@ -80,12 +90,37 @@ const Header = ({}: HeaderProps) => {
       setAddedWallet(address);
     });
   };
+  const handleGetInfoSuccess = (data: any) => {
+    console.log("data", data);
+  };
+
+  const wallets = {
+    wallet_address: signerAddress,
+    ref_address: "0x09e583d6C248121077496E57550849619b833e7a",
+  };
+
+  const {
+    mutate: addWallet,
+    data: getInfoResponse,
+    isLoading: isAddBankLoading,
+  } = useGetInfo();
+
+  const handleGetInfo = (address: string) => {
+    const data = {
+      wallet_address: address,
+    };
+    addWallet(data);
+  };
+
+  const { data: getToppointsResponse, isLoading: getTopPointLoading } =
+    useGetTopPoint(wallets);
 
   const getWalletAddress = (signer: any, uniContract: any) => {
     {
       isConnected()
         ? signer.getAddress().then((address: any) => {
             setSignerAddress(address);
+            handleGetInfo(address);
             setAddedWallet(address);
             // todo: connect weth and uni contracts
             uniContract.balanceOf(address).then((res: any) => {
@@ -111,26 +146,20 @@ const Header = ({}: HeaderProps) => {
     const { ethereum }: any = window;
 
     if (!ethereum) {
-      openNotification("Please install MetaMask", "", ToastifyStatus.WARNING);
+      openNotification(
+        "Please install MetaMask",
+        "",
+        ToastifyStatus.WARNING,
+        api
+      );
     }
 
     try {
       await getSigner(provider);
-      openNotification("Connected", "", ToastifyStatus.SUCCESS);
+      openNotification("Connected", "", ToastifyStatus.SUCCESS, api);
     } catch (err) {
-      openNotification("Failed to Connect", "", ToastifyStatus.ERROR);
+      openNotification("Failed to Connect", "", ToastifyStatus.ERROR, api);
     }
-  };
-
-  const openNotification = async (
-    message: string,
-    description: string,
-    type: NotificationType
-  ) => {
-    api[type]({
-      message: message,
-      description: description || "",
-    });
   };
 
   return (
@@ -138,7 +167,6 @@ const Header = ({}: HeaderProps) => {
       {contextHolder}
       <div className={cn("container-wide", styles.container)}>
         <Logo white className={styles.logo} />
-
         <div className={styles.menu}>
           {headerNavigation.map((link, index) =>
             link.external ? (

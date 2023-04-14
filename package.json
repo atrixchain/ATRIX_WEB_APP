@@ -30,6 +30,7 @@
     "react-animation-on-scroll": "^5.1.0",
     "react-dom": "18.1.0",
     "react-hotkeys-hook": "^3.4.7",
+    "react-loading": "^2.0.3",
     "react-responsive": "^9.0.0-beta.10",
     "react-scroll-parallax": "^3.2.0",
     "react-spinners": "^0.13.8",

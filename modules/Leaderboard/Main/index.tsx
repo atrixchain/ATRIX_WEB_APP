@@ -5,23 +5,28 @@ import { Col, Row } from "antd";
 import YourAccountTable from "./YourAccount";
 import TopAccountsTable from "./TopAccounts";
 import YourInvitesTable from "./YourInvites";
+import { useTwiiterStore } from "stores/twiiter.store";
+import { useState } from "react";
 
 type MainProps = {};
 
 const Main = ({}: MainProps) => {
+  const { point, topPoint }: any = useTwiiterStore();
+  console.log("topPoint", topPoint);
+
   return (
     <div className={cn("section", styles.section)}>
       <Row gutter={24}>
         <Col span={15}>
           <div>
-            <TopAccountsTable />
+            <TopAccountsTable topPoint={topPoint} />
           </div>
           <div className={styles.yourInvites}>
             <YourInvitesTable />
           </div>
         </Col>
         <Col span={8}>
-          <YourAccountTable />
+          <YourAccountTable userPoint={point} />
         </Col>
       </Row>
     </div>

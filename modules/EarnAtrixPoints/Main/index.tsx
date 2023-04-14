@@ -32,6 +32,7 @@ const Main = ({}: MainProps) => (
           firstButtonPurple={false}
           secondButtonPurple={false}
           thirdButtonPurple={false}
+          disable={true}
         />
       </div>
     </Space>

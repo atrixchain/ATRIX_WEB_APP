@@ -20,6 +20,7 @@ type CardProps = {
   firstButtonPurple: boolean;
   secondButtonPurple: boolean;
   thirdButtonPurple: boolean;
+  disable: boolean;
 };
 
 const AtrixCard = ({
@@ -37,6 +38,7 @@ const AtrixCard = ({
   firstButtonPurple,
   secondButtonPurple,
   thirdButtonPurple,
+  disable,
 }: CardProps) => {
   return (
     <Space
@@ -80,7 +82,13 @@ const AtrixCard = ({
             />
             {isEarnAtrixScreen && <Divider />}
             <Button
-              style={secondButtonPurple ? styles.buttonPurple : styles.button}
+              style={
+                secondButtonPurple
+                  ? styles.buttonPurple
+                  : disable
+                  ? styles.disabledButton
+                  : styles.button
+              }
               onClick={() => console.log(123)}
               title={<div>{secondButtonTitle}</div>}
               type={"primary"}
@@ -91,7 +99,11 @@ const AtrixCard = ({
               ) : (
                 <Button
                   style={
-                    thirdButtonPurple ? styles.buttonPurple : styles.button
+                    thirdButtonPurple
+                      ? styles.buttonPurple
+                      : disable
+                      ? styles.disabledButton
+                      : styles.button
                   }
                   onClick={() => console.log(123)}
                   title={<div>{thirdButtonTitle}</div>}

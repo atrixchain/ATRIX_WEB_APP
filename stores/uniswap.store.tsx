@@ -1,13 +1,13 @@
-import { IFaucetProvider } from "apis/Uniswap.type";
+import { IUniswapProvider } from "apis/Uniswap.type";
 import { create } from "zustand";
 
 interface UniState {
-  addedProvider: IFaucetProvider | null;
-  addedSigner: IFaucetProvider | null;
+  addedProvider: IUniswapProvider | null;
+  addedSigner: IUniswapProvider | null;
   addedWallet: string ;
   isConnected: boolean;
-  setAddedProvider: (values: IFaucetProvider | null) => void;
-  setAddedSigner: (values: IFaucetProvider | null) => void;
+  setAddedProvider: (values: IUniswapProvider | null) => void;
+  setAddedSigner: (values: IUniswapProvider | null) => void;
   setAddedWallet: (values: string) => void;
   setIsConnected: (values: boolean) => void;
 }
