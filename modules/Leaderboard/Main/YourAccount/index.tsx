@@ -47,7 +47,9 @@ const YourAccountTable = ({ userPoint }: YourAccountProps) => {
         </Space>
         <Button
           style={styles.button}
-          onClick={() => getSigner(addedProvider)}
+          onClick={() =>
+            isConnected ? console.log('Connected') : getSigner(addedProvider)
+          }
           title={<div>{isConnected ? "Connected" : "Connect Wallet"}</div>}
         />
       </Space>
