@@ -18,12 +18,15 @@ const Main = ({}: MainProps) => {
           "Successfully added Faucet",
           data.message,
           "success",
-          api
+          api,
+          0,
+        null
         )
       : null;
   };
   const handleFaucetError = (data: any) => {
-    openNotification("Failed to sent ATRIX", "", "error", api);
+    openNotification("Failed to sent ATRIX", "", "error", api, 0,
+    null);
   };
   const { mutate: addFaucet, isLoading: isAddBankLoading } = useAddFaucet({
     onSuccess: handleAddFaucetSuccess,
@@ -33,7 +36,8 @@ const Main = ({}: MainProps) => {
 
   const handleAddFaucet = () => {
     if(addedFaucet === "") {
-      openNotification("Please enter your wallet", "", "warning", api);
+      openNotification("Please enter your wallet", "", "warning", api, 0,
+      null);
     }
     const data = {
       wallet_address: addedFaucet,

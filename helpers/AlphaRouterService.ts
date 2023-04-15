@@ -125,7 +125,9 @@ export const runSwap = async (transaction: any, signer: any) => {
                 gasPrice: ethers.utils.parseUnits("5", "gwei"),
               }
             );
-      return TX;
+
+      const txResponse = await TX;
+      return txResponse;
     }
   } catch (e) {
     console.log(e);
