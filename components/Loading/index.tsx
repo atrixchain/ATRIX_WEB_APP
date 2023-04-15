@@ -1,8 +1,13 @@
-import React from "react";
-import ReactLoading from "react-loading";
+import { useState, CSSProperties } from "react";
+import SyncLoader from "react-spinners/ClipLoader";
 
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const Loading = () => (
-  <ReactLoading type={"spin"} color={"#5442D0"} height={667} width={375} />
+  <SyncLoader color="#36d7b7" size={17} cssOverride={override} />
 );
 
 export default Loading;

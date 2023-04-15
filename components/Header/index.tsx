@@ -122,7 +122,6 @@ const Header = ({}: HeaderProps) => {
 
   const { data: getToppointsResponse, isLoading: getTopPointLoading } =
     useGetTopPoint(wallets);
-
   const getWalletAddress = (signer: any, uniContract: any) => {
     {
       isWalletConnected()
