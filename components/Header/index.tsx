@@ -35,9 +35,15 @@ const Header = ({}: HeaderProps) => {
 
   const [uniAmount, setUniAmount] = useState(0);
   const [api, contextHolder] = notification.useNotification();
-  const { setAddedProvider, setAddedWallet, setAddedSigner, setIsConnected } =
-    useUniswapStore();
+  const {
+    setAddedProvider,
+    setAddedWallet,
+    setAddedSigner,
+    setIsConnected,
+    isConnected,
+  } = useUniswapStore();
 
+  
   useEffect(() => {
     const init = async () => {
       await onLoad();
@@ -77,7 +83,7 @@ const Header = ({}: HeaderProps) => {
     const uniContract = await getMTKContract();
     setUniContract(uniContract);
   };
-  const isConnected = () => signer !== undefined;
+  const isWalletConnected = () => signer !== undefined;
 
   const getSigner = async (provider: any) => {
     await provider?.send("eth_requestAccounts", []);
@@ -117,7 +123,7 @@ const Header = ({}: HeaderProps) => {
 
   const getWalletAddress = (signer: any, uniContract: any) => {
     {
-      isConnected()
+      isWalletConnected()
         ? signer.getAddress().then((address: any) => {
             setSignerAddress(address);
             handleGetInfo(address);
@@ -135,7 +141,7 @@ const Header = ({}: HeaderProps) => {
       getWalletAddress(signer, uniContract);
       setIsConnected(true);
     }
-  }, [signer, uniContract]);
+  }, [signer, uniContract, isConnected]);
 
   const displayAddress =
     signerAddress !== undefined

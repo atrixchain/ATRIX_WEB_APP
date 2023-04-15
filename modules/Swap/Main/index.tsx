@@ -38,7 +38,7 @@ const Main = ({}: MainProps) => {
   const [midPrice, setMidPrice] = useState<string>("");
 
   const [transaction, setTransaction] = useState({});
-  
+
   // const filteredPersons = cryptos.filter((item) => {
   //   return item.title.toLowerCase().includes(searchField.toLowerCase());
   // });
@@ -48,6 +48,11 @@ const Main = ({}: MainProps) => {
   const getSigner = async (provider: any) => {
     provider?.send("eth_requestAccounts", []);
     const signer = provider?.getSigner();
+    if (signer) {
+      setTimeout(() => {
+        document.location.reload();
+      }, 3000);
+    }
     return signer;
   };
 

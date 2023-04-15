@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./YourAccount.module.sass";
 import { Space } from "antd";
 import Button from "@/components/Button";
 import { useTwiiterStore } from "stores/twiiter.store";
+import { useUniswapStore } from "stores/uniswap.store";
+import { getMTKContract } from "@/helpers/AlphaRouterService";
+import { ppid } from "process";
 
 interface YourAccountProps {
   userPoint: number | null;
 }
 
 const YourAccountTable = ({ userPoint }: YourAccountProps) => {
+  const { addedProvider, isConnected } = useUniswapStore();
+
+  const getSigner = async (provider: any) => {
+    provider?.send("eth_requestAccounts", []);
+    const signer = await provider?.getSigner();
+    if (signer) {
+      setTimeout(() => {
+        document.location.reload();
+      }, 3000);
+    }
+    return signer;
+  };
+
   return (
     <div className={styles.yourAccountTable}>
-      <Space direction="vertical" >
+      <Space direction="vertical">
         <div className={styles.tableHeader}>
           <div className={styles.bold}>Your Accounts</div>
         </div>
@@ -31,8 +47,8 @@ const YourAccountTable = ({ userPoint }: YourAccountProps) => {
         </Space>
         <Button
           style={styles.button}
-          onClick={() => console.log(123)}
-          title={<div>Connect Wallet</div>}
+          onClick={() => getSigner(addedProvider)}
+          title={<div>{isConnected ? "Connected" : "Connect Wallet"}</div>}
         />
       </Space>
     </div>

@@ -76,7 +76,11 @@ const AtrixCard = ({
           <div className={styles.buttonContainer}>
             <Button
               style={firstButtonPurple ? styles.buttonPurple : styles.button}
-              onClick={() => console.log(123)}
+              onClick={() =>
+                window
+                  ?.open("https://twitter.com/Atrixchain", "_blank")
+                  ?.focus()
+              }
               title={<div>{firstButtonTitle}</div>}
               type={"primary"}
             />
