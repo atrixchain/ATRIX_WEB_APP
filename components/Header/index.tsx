@@ -14,6 +14,7 @@ import { useGetInfo, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
 import { useTwiiterStore } from "stores/twiiter.store";
 import axios from "axios";
 import Loading from "../Loading";
+import { PoweroffOutlined } from "@ant-design/icons";
 interface HeaderProps {}
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -43,7 +44,6 @@ const Header = ({}: HeaderProps) => {
     isConnected,
   } = useUniswapStore();
 
-  
   useEffect(() => {
     const init = async () => {
       await onLoad();
@@ -62,7 +62,9 @@ const Header = ({}: HeaderProps) => {
         "Please install MetaMask",
         "",
         ToastifyStatus.WARNING,
-        api
+        api,
+        0,
+        null
       );
       return;
     } else {
@@ -156,15 +158,24 @@ const Header = ({}: HeaderProps) => {
         "Please install MetaMask",
         "",
         ToastifyStatus.WARNING,
-        api
+        api,
+        0,
+        null
       );
     }
 
     try {
       await getSigner(provider);
-      openNotification("Connected", "", ToastifyStatus.SUCCESS, api);
+      openNotification("Connected", "", ToastifyStatus.SUCCESS, api, 0, null);
     } catch (err) {
-      openNotification("Failed to Connect", "", ToastifyStatus.ERROR, api);
+      openNotification(
+        "Failed to Connect",
+        "",
+        ToastifyStatus.ERROR,
+        api,
+        0,
+        null
+      );
     }
   };
 
@@ -218,6 +229,8 @@ const Header = ({}: HeaderProps) => {
           }
           type={"primary"}
         />
+
+        <PoweroffOutlined />
       </div>
     </header>
   );

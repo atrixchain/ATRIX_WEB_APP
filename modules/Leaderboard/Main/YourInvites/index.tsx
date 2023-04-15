@@ -16,11 +16,13 @@ const YourInvitesTable = ({}: YourInvitesProps) => {
   const handlePostRefSuccess = async (data: any) => {
     useGetTopPoint(addedWallet);
     data
-      ? openNotification("Successfully invited", data.message, "success", api)
+      ? openNotification("Successfully invited", data.message, "success", api, 0,
+      null)
       : null;
   };
   const handlePostRefError = (err: any) => {
-    openNotification("Failed", err.message, "error", api);
+    openNotification("Failed", err.message, "error", api, 0,
+    null);
   };
   const {
     mutate: postRef,

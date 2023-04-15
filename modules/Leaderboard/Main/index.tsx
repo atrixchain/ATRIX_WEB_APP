@@ -12,7 +12,6 @@ type MainProps = {};
 
 const Main = ({}: MainProps) => {
   const { point, topPoint }: any = useTwiiterStore();
-  console.log("topPoint", topPoint);
 
   return (
     <div className={cn("section", styles.section)}>
