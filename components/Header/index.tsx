@@ -63,7 +63,6 @@ const Header = ({}: HeaderProps) => {
         "",
         ToastifyStatus.WARNING,
         api,
-        0,
         null
       );
       return;
@@ -102,11 +101,6 @@ const Header = ({}: HeaderProps) => {
     console.log("data", data);
   };
 
-  const wallets = {
-    wallet_address: signerAddress,
-    ref_address: "0x09e583d6C248121077496E57550849619b833e7a",
-  };
-
   const {
     mutate: addWallet,
     data: getInfoResponse,
@@ -120,8 +114,6 @@ const Header = ({}: HeaderProps) => {
     addWallet(data);
   };
 
-  const { data: getToppointsResponse, isLoading: getTopPointLoading } =
-    useGetTopPoint(wallets);
   const getWalletAddress = (signer: any, uniContract: any) => {
     {
       isWalletConnected()
@@ -158,21 +150,19 @@ const Header = ({}: HeaderProps) => {
         "",
         ToastifyStatus.WARNING,
         api,
-        0,
         null
       );
     }
 
     try {
       await getSigner(provider);
-      openNotification("Connected", "", ToastifyStatus.SUCCESS, api, 0, null);
+      openNotification("Connected", "", ToastifyStatus.SUCCESS, api, null);
     } catch (err) {
       openNotification(
         "Failed to Connect",
         "",
         ToastifyStatus.ERROR,
         api,
-        0,
         null
       );
     }

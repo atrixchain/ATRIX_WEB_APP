@@ -52,7 +52,6 @@ const ModalSumbitForm = ({
           swapRessponseHash,
           "success",
           api,
-          0,
           <Button
             type="link"
             size="small"

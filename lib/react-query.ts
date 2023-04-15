@@ -13,7 +13,7 @@ export const QUERY_CLIENT_DEFAULT_OPTIONS: QueryClientConfig = {
   },
   queryCache: new QueryCache({
     onError: (error: any) => {
-      return console.log(error);
+      return console.log("react query res " , error);
     },
   }),
 };

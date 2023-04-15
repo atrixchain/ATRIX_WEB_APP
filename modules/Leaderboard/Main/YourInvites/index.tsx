@@ -6,28 +6,29 @@ import { useState } from "react";
 import { usePostRef, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
-type YourInvitesProps = {};
+type YourInvitesProps = {
+  rfTopPoint: () => void;
+};
 
-const YourInvitesTable = ({}: YourInvitesProps) => {
+const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
   const [refAddress, setRefAddress] = useState<string>("");
   const { addedWallet } = useUniswapStore();
   const [api, contextHolder] = notification.useNotification();
 
   const handlePostRefSuccess = async (data: any) => {
-    useGetTopPoint(addedWallet);
     data
       ? openNotification(
           "Successfully invited",
           data.message,
           "success",
           api,
-          0,
           null
         )
       : null;
+    rfTopPoint();
   };
   const handlePostRefError = (err: any) => {
-    openNotification("Failed", err.message, "error", api, 0, null);
+    openNotification("Failed", err.message, "error", api, null);
   };
   const {
     mutate: postRef,

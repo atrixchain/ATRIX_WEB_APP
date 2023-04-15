@@ -3,6 +3,7 @@ import { useUniswapStore } from "stores/uniswap.store";
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { TwiiterApis } from "apis/Twiiter.api";
 import { useTwiiterStore } from "stores/twiiter.store";
+import { queryClient } from "lib/react-query";
 
 const TWIITER_CACHE_KEYS = {
   get_info: "get_info",
@@ -18,7 +19,10 @@ export const usePostRef = ({ onSuccess, onError }: IQueryProps) => {
     [TWIITER_CACHE_KEYS.post_ref_addresses],
     (data: ITwiiterParams) => TwiiterApis.postRef(data),
     {
-      onSuccess: (result: any) => onSuccess(result?.data),
+      onSuccess: (result: any) => {
+        queryClient.invalidateQueries([TWIITER_CACHE_KEYS.get_top_point]);
+        onSuccess(result?.data);
+      },
       onError: (err: any) => onError(err?.response?.data),
     }
   );

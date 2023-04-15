@@ -6,13 +6,28 @@ import YourAccountTable from "./YourAccount";
 import TopAccountsTable from "./TopAccounts";
 import YourInvitesTable from "./YourInvites";
 import { useTwiiterStore } from "stores/twiiter.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetTopPoint } from "queries/Twiiter/Twiiter.query";
+import { useUniswapStore } from "stores/uniswap.store";
 
 type MainProps = {};
 
 const Main = ({}: MainProps) => {
-  const { point, topPoint }: any = useTwiiterStore();
+  const { addedWallet }: any = useUniswapStore();
+  const { point }: any = useTwiiterStore();
 
+  const wallets = {
+    wallet_address: addedWallet,
+    ref_address: "0x09e583d6C248121077496E57550849619b833e7a",
+  };
+  const {
+    data: getToppointsResponse,
+    isLoading: getTopPointLoading,
+    refetch: rfTopPoint,
+  } = useGetTopPoint(wallets);
+
+  const topPoint = getToppointsResponse?.data?.data;
+  
   return (
     <div className={cn("section", styles.section)}>
       <Row gutter={24}>
@@ -21,7 +36,7 @@ const Main = ({}: MainProps) => {
             <TopAccountsTable topPoint={topPoint} />
           </div>
           <div className={styles.yourInvites}>
-            <YourInvitesTable />
+            <YourInvitesTable rfTopPoint={rfTopPoint} />
           </div>
         </Col>
         <Col span={8}>
