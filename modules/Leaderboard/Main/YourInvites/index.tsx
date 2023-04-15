@@ -3,7 +3,7 @@ import { Input, notification, Space } from "antd";
 import Button from "@/components/Button";
 import { ENTER_REF } from "@/constants/commom";
 import { useState } from "react";
-import { usePostRef } from "queries/Twiiter/Twiiter.query";
+import { usePostRef, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
 type YourInvitesProps = {};
@@ -13,7 +13,8 @@ const YourInvitesTable = ({}: YourInvitesProps) => {
   const { addedWallet } = useUniswapStore();
   const [api, contextHolder] = notification.useNotification();
 
-  const handlePostRefSuccess = (data: any) => {
+  const handlePostRefSuccess = async (data: any) => {
+    useGetTopPoint(addedWallet);
     data
       ? openNotification("Successfully invited", data.message, "success", api)
       : null;
