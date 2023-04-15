@@ -230,7 +230,7 @@ const Header = ({}: HeaderProps) => {
           type={"primary"}
         />
 
-        <PoweroffOutlined />
+        {/* <PoweroffOutlined /> */}
       </div>
     </header>
   );

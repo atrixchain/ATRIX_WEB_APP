@@ -57,13 +57,19 @@ const ModalSumbitForm = ({
             type="link"
             size="small"
             onClick={() =>
-              window?.open(`https://explorer-testnet.atrixchain.com/tx/${swapRessponseHash}`, "_blank")?.focus()
+              window
+                ?.open(
+                  `https://explorer-testnet.atrixchain.com/tx/${swapRessponseHash}`,
+                  "_blank"
+                )
+                ?.focus()
             }
           >
             See block
           </Button>
         )
       : null;
+    onCancel();
   };
 
   const { title: firstTitle, image: firstImage } = firstCrypto;
