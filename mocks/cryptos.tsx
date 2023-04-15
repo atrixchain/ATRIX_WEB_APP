@@ -47,8 +47,8 @@ export const cryptos = [
   },
 
   {
-    title: "MTK2",
-    name: "My Token 2",
+    title: "ATR",
+    name: "Atrix Token ",
     image: "/images/atrix.jpeg",
   },
 ];

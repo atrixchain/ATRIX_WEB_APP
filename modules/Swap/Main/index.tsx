@@ -33,12 +33,12 @@ const Main = ({}: MainProps) => {
   const [deadlineMinutes, setDeadlineMinutes] = useState<number>(30);
 
   const [firstPickedCrypto, setFirstPickedCrypto] = useState("MTK");
-  const [secondPickedCrypto, setSecondPickedCrypto] = useState("MTK2");
+  const [secondPickedCrypto, setSecondPickedCrypto] = useState("ATR");
   const [outputAmount, setOutputAmount] = useState<any>(0);
   const [midPrice, setMidPrice] = useState<string>("");
 
   const [transaction, setTransaction] = useState({});
-
+  
   // const filteredPersons = cryptos.filter((item) => {
   //   return item.title.toLowerCase().includes(searchField.toLowerCase());
   // });

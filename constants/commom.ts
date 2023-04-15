@@ -20,3 +20,4 @@ export const INVITE_FOR_EACH_PERSON =
 export const VERIFY_TW_BUTTON = "Verift Twitter to Earn ATRIX Points";
 export const SHARE_TW = "Share one Twitter";
 export const COPY_LINK = "Coppy Link";
+export const ENTER_REF = "Enter Your Referral Wallet Address (0x...)i";

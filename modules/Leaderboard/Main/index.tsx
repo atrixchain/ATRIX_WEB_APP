@@ -17,7 +17,7 @@ const Main = ({}: MainProps) => {
   return (
     <div className={cn("section", styles.section)}>
       <Row gutter={24}>
-        <Col span={15}>
+        <Col span={16}>
           <div>
             <TopAccountsTable topPoint={topPoint} />
           </div>
