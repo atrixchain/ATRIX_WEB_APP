@@ -6,11 +6,12 @@ import { useState } from "react";
 import { usePostRef, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
+import Loading from "@/components/Loading";
 type YourInvitesProps = {
   rfTopPoint: () => void;
 };
 
-const YourInvitesTable = ({ rfTopPoint}: YourInvitesProps) => {
+const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
   const [refAddress, setRefAddress] = useState<string>("");
   const { addedWallet } = useUniswapStore();
   const [api, contextHolder] = notification.useNotification();
@@ -33,7 +34,7 @@ const YourInvitesTable = ({ rfTopPoint}: YourInvitesProps) => {
   const {
     mutate: postRef,
     data: getInfoResponse,
-    isLoading: isAddBankLoading,
+    isLoading: isPostRefLoading,
   } = usePostRef({
     onSuccess: handlePostRefSuccess,
     onError: handlePostRefError,
@@ -49,6 +50,7 @@ const YourInvitesTable = ({ rfTopPoint}: YourInvitesProps) => {
   return (
     <div className={styles.topAccountTable}>
       {contextHolder}
+      {isPostRefLoading && <Loading />}
       <Space direction="vertical">
         <Space direction="horizontal" className={styles.tableHeader}>
           <div className={styles.bold}>Your Invites</div>

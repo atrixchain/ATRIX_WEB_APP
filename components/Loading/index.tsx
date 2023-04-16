@@ -1,13 +1,13 @@
 import { useState, CSSProperties } from "react";
-import SyncLoader from "react-spinners/ClipLoader";
+import SyncLoader from "react-spinners/BeatLoader";
+import styles from "./Loading.module.sass";
 
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
 const Loading = () => (
-  <SyncLoader color="#36d7b7" size={17} cssOverride={override} />
+  <div className={styles.loadingGlobal}>
+    <div className={styles.loading}>
+      <SyncLoader color="#5442d0" size={20} />
+    </div>
+  </div>
 );
 
 export default Loading;

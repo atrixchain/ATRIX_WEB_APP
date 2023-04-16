@@ -6,6 +6,7 @@ import { ENTER_WALLET_TEXT } from "@/constants/commom";
 import { useAddFaucet } from "queries/Faucet/Faucet.query";
 import { openNotification } from "@/helpers/pushNotification";
 import axios, { AxiosResponse } from "axios";
+import Loading from "@/components/Loading";
 type MainProps = {
   scrollToRef: any;
 };
@@ -26,7 +27,7 @@ const Main = ({}: MainProps) => {
   const handleFaucetError = (data: any) => {
     openNotification("Failed to sent ATRIX", "", "error", api, null);
   };
-  const { mutate: addFaucet, isLoading: isAddBankLoading } = useAddFaucet({
+  const { mutate: addFaucet, isLoading: isAddFaucetLoading } = useAddFaucet({
     onSuccess: handleAddFaucetSuccess,
     onError: handleFaucetError,
   });
@@ -45,6 +46,7 @@ const Main = ({}: MainProps) => {
   return (
     <div className={cn("section", styles.section)}>
       {contextHolder}
+      {isAddFaucetLoading && <Loading />}
       <div className={cn("appHeader", styles.title)}>ATRIX FAUCET</div>
       <Space direction="horizontal" className={styles.input}>
         <Input

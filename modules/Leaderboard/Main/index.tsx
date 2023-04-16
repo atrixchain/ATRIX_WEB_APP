@@ -9,6 +9,7 @@ import { useTwiiterStore } from "stores/twiiter.store";
 import { useEffect, useState } from "react";
 import { useGetInfo, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
 import { useUniswapStore } from "stores/uniswap.store";
+import Loading from "@/components/Loading";
 
 type MainProps = {};
 
@@ -18,7 +19,7 @@ const Main = ({}: MainProps) => {
   const {
     mutate: addWallet,
     data: getInfoResponse,
-    isLoading: isAddBankLoading,
+    isLoading: isGetInfoLoading,
   } = useGetInfo();
 
   const userPoint = getInfoResponse?.data?.data?.point?.point;
@@ -35,7 +36,7 @@ const Main = ({}: MainProps) => {
   };
   const {
     data: getToppointsResponse,
-    isLoading: getTopPointLoading,
+    isLoading: isGetTopPointLoading,
     refetch: rfTopPoint,
   } = useGetTopPoint(wallets);
 
@@ -47,6 +48,8 @@ const Main = ({}: MainProps) => {
 
   return (
     <div className={cn("section", styles.section)}>
+      {(isGetTopPointLoading && <Loading />) ||
+        (isGetInfoLoading && <Loading />)}
       <Row gutter={24}>
         <Col span={17}>
           <div>
