@@ -10,13 +10,9 @@ const { ethers } = require("ethers");
 import { getMTKContract, getWethContract } from "@/helpers/AlphaRouterService";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
-import { useGetInfo, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
-import { useTwiiterStore } from "stores/twiiter.store";
-import axios from "axios";
-import Loading from "../Loading";
+
 import { PoweroffOutlined } from "@ant-design/icons";
 interface HeaderProps {}
-type NotificationType = "success" | "info" | "warning" | "error";
 
 export enum ToastifyStatus {
   SUCCESS = "success",
@@ -97,29 +93,13 @@ const Header = ({}: HeaderProps) => {
       setAddedWallet(address);
     });
   };
-  const handleGetInfoSuccess = (data: any) => {
-    console.log("data", data);
-  };
 
-  const {
-    mutate: addWallet,
-    data: getInfoResponse,
-    isLoading: isAddBankLoading,
-  } = useGetInfo();
-
-  const handleGetInfo = (address: string) => {
-    const data = {
-      wallet_address: address,
-    };
-    addWallet(data);
-  };
 
   const getWalletAddress = (signer: any, uniContract: any) => {
     {
       isWalletConnected()
         ? signer.getAddress().then((address: any) => {
             setSignerAddress(address);
-            handleGetInfo(address);
             setAddedWallet(address);
             // todo: connect weth and uni contracts
             uniContract.balanceOf(address).then((res: any) => {

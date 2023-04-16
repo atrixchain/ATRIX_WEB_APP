@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./YourAccount.module.sass";
 import { Space } from "antd";
 import Button from "@/components/Button";
-import { useTwiiterStore } from "stores/twiiter.store";
 import { useUniswapStore } from "stores/uniswap.store";
-import { getMTKContract } from "@/helpers/AlphaRouterService";
-import { ppid } from "process";
 
 interface YourAccountProps {
   userPoint: number | null;
@@ -14,6 +11,7 @@ interface YourAccountProps {
 const YourAccountTable = ({ userPoint }: YourAccountProps) => {
   const { addedProvider, isConnected } = useUniswapStore();
 
+ 
   const getSigner = async (provider: any) => {
     provider?.send("eth_requestAccounts", []);
     const signer = await provider?.getSigner();

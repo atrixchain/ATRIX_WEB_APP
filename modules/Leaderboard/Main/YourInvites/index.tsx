@@ -10,7 +10,7 @@ type YourInvitesProps = {
   rfTopPoint: () => void;
 };
 
-const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
+const YourInvitesTable = ({ rfTopPoint}: YourInvitesProps) => {
   const [refAddress, setRefAddress] = useState<string>("");
   const { addedWallet } = useUniswapStore();
   const [api, contextHolder] = notification.useNotification();
@@ -39,7 +39,7 @@ const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
     onError: handlePostRefError,
   });
 
-  const handleGetInfo = () => {
+  const handlePostRef = () => {
     const data = {
       wallet_address: addedWallet,
       ref_address: refAddress,
@@ -62,7 +62,7 @@ const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
         />
         <Button
           style={styles.button}
-          onClick={handleGetInfo}
+          onClick={handlePostRef}
           title={<div>Invite to earn more ATRIX Points</div>}
         />
       </Space>
