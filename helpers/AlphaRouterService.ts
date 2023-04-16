@@ -53,18 +53,32 @@ export const getPrice = async (
     if (ethereum) {
       const wei = await ethers.utils.parseEther(inputAmount.toString());
 
+      const getFirstSymbol = firstSymbol !== "MTK" ? ATR : MTK;
+      const getSecondSymbol = secondSymbol !== "ATR" ? MTK : ATR;
+
+      console.log("getFirstSymbol", getFirstSymbol);
+      console.log("getSecondSymbol", getSecondSymbol);
+
       const pair = await Fetcher.fetchPairData(
-        firstSymbol === "MTK" ? MTK : ATR,
-        secondSymbol === "ATR" ? ATR : MTK,
+        getFirstSymbol,
+        getSecondSymbol,
         provider
       );
-      const route = new Route([pair], secondSymbol === "ATR" ? ATR : MTK);
+      const route = new Route(
+        [pair],
+        firstSymbol === "MTK" ? getFirstSymbol : getSecondSymbol
+      );
 
       const trade = new Trade(
         route,
-        new TokenAmount(secondSymbol === "ATR" ? ATR : MTK, wei),
+        new TokenAmount(
+          firstSymbol === "MTK" ? getFirstSymbol : getSecondSymbol,
+          wei
+        ),
         TradeType.EXACT_INPUT
       );
+
+      console.log("trade", trade);
 
       const executionPrice = trade.executionPrice.toSignificant(6);
       const nextMidPrice = trade.nextMidPrice.toSignificant(6);
@@ -102,7 +116,7 @@ export const runSwap = async (transaction: any, signer: any) => {
         deadline,
       } = transaction;
       const TX =
-        (await firstSymbol) === symbol1
+        (await firstSymbol) !== symbol0
           ? contract0.swapExactTokensForETH(
               amountIn,
               amountOutMin,
