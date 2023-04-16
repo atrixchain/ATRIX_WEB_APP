@@ -4,15 +4,18 @@ import { ethers } from "ethers";
 
 const URL = {
   INFO_URL: "/info",
+  INFO_PARAMS_KEY: "?wallet_address=",
   TOP_POINT_URL: "/top-point",
   REF_URL: "/ref",
 };
 
 export const TwiiterApis = {
-  getInfo: (wallet: any) => {
-    const checkWallet = ethers.utils.isAddress(wallet.wallet_address);
+  getInfo: (wallet: string) => {
+    const checkWallet = ethers.utils.isAddress(wallet);
     if (checkWallet === true) {
-      return httpClient.post<any>(`${URL.INFO_URL}`, wallet);
+      return httpClient.get<any>(
+        `${URL.INFO_URL}${URL.INFO_PARAMS_KEY}${wallet}`
+      );
     } else {
       throw new Error("invalid wallet address");
     }

@@ -9,9 +9,10 @@ import { openNotification } from "@/helpers/pushNotification";
 import Loading from "@/components/Loading";
 type YourInvitesProps = {
   rfTopPoint: () => void;
+  rfInfo: () => void;
 };
 
-const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
+const YourInvitesTable = ({ rfTopPoint, rfInfo }: YourInvitesProps) => {
   const [refAddress, setRefAddress] = useState<string>("");
   const { addedWallet } = useUniswapStore();
   const [api, contextHolder] = notification.useNotification();
@@ -27,6 +28,7 @@ const YourInvitesTable = ({ rfTopPoint }: YourInvitesProps) => {
         )
       : null;
     rfTopPoint();
+    rfInfo()
   };
   const handlePostRefError = (err: any) => {
     openNotification("Failed", err.message, "error", api, null);

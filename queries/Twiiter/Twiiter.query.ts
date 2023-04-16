@@ -21,17 +21,19 @@ export const usePostRef = ({ onSuccess, onError }: IQueryProps) => {
     {
       onSuccess: (result: any) => {
         queryClient.invalidateQueries([TWIITER_CACHE_KEYS.get_top_point]);
+        queryClient.invalidateQueries([TWIITER_CACHE_KEYS.get_info]);
+
         onSuccess(result?.data);
       },
       onError: (err: any) => onError(err?.response?.data),
     }
   );
 };
-export const useGetInfo = () => {
+export const useGetInfo = (wallet: string) => {
   const { setPoints } = useTwiiterStore();
-  return useMutation(
-    [TWIITER_CACHE_KEYS.get_info],
-    (data: ITwiiterParams) => TwiiterApis.getInfo(data),
+  return useQuery(
+    [TWIITER_CACHE_KEYS.get_info, wallet],
+    () => TwiiterApis.getInfo(wallet),
     {
       onSuccess: (result: any) => setPoints(result?.data?.data.point.point),
     }
@@ -44,7 +46,9 @@ export const useGetTopPoint = (data: any) => {
     [TWIITER_CACHE_KEYS.get_top_point, data],
     () => TwiiterApis.getTopPoint(data),
     {
-      onSuccess: (result: any) => setTopPoint(result?.data?.data),
+      onSuccess: (result: any) => {
+        setTopPoint(result?.data?.data);
+      },
     }
   );
 };
