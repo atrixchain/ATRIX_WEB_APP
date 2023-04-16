@@ -17,9 +17,6 @@ const CurrencyField = (props: propsType) => {
   return (
     <div>
       <InputNumber
-        formatter={(value) =>
-          `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        }
         className={styles.inputPlaceholder}
         onChange={(value: any) => {
           field === "input" ? getPrice(value) : null;
