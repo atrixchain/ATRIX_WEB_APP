@@ -17,15 +17,15 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta
-            content="Epic landing page UI Design Kit for Blockchain, Crypto"
-            name="ATRIX Blockchain Landing Page UI Design Kit"
+            content="Atrix Testnet Application"
+            name="Atrix Testnet Application"
           />
           <meta
-            content="ATRIX Blockchain Landing Page UI Design Kit"
+            content="Atrix Testnet Application"
             property="og:title"
           />
           <meta
-            content="Epic landing page UI Design Kit for Blockchain, Crypto"
+            content="Atrix Testnet Application"
             property="og:description"
           />
           <meta content="%PUBLIC_URL%/fb-og-image.png" property="og:image" />
@@ -35,14 +35,14 @@ class MyDocument extends Document {
           />
           <meta
             property="og:site_name"
-            content="ATRIX Blockchain Landing Page UI Design Kit"
+            content="Atrix Testnet Application"
           />
           <meta
-            content="ATRIX Blockchain Landing Page UI Design Kit"
+            content="Atrix Testnet Application"
             property="twitter:title"
           />
           <meta
-            content="Epic landing page UI Design Kit for Blockchain, Crypto"
+            content="Atrix Testnet Application"
             property="twitter:description"
           />
           <meta
