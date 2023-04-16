@@ -31,7 +31,7 @@ const Main = ({}: MainProps) => {
   return (
     <div className={cn("section", styles.section)}>
       <Row gutter={24}>
-        <Col span={16}>
+        <Col span={17}>
           <div>
             <TopAccountsTable topPoint={topPoint} />
           </div>
@@ -39,7 +39,7 @@ const Main = ({}: MainProps) => {
             <YourInvitesTable rfTopPoint={rfTopPoint} />
           </div>
         </Col>
-        <Col span={8}>
+        <Col span={7}>
           <YourAccountTable userPoint={point} />
         </Col>
       </Row>
