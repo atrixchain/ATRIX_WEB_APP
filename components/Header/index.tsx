@@ -13,7 +13,6 @@ import { openNotification } from "@/helpers/pushNotification";
 
 import { PoweroffOutlined } from "@ant-design/icons";
 interface HeaderProps {}
-
 export enum ToastifyStatus {
   SUCCESS = "success",
   INFO = "info",
@@ -41,11 +40,8 @@ const Header = ({}: HeaderProps) => {
   } = useUniswapStore();
 
   useEffect(() => {
-    const init = async () => {
-      await onLoad();
-    };
-    init();
-  }, []);
+    onLoad();
+  }, [signerAddress]);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
@@ -63,13 +59,13 @@ const Header = ({}: HeaderProps) => {
       );
       return;
     } else {
-      console.log("Wallet exists! We're ready to go!");
     }
     const accounts = await ethereum.request({ method: "eth_accounts" });
 
+    ethereum.on("accountsChanged", handleAccountsChanged);
+
     if (accounts.length !== 0) {
       const account = accounts[0];
-      console.log("Found an authorized account: ", account);
       setAddedWallet(account);
       setSignerAddress(account);
       getSigner(provider);
@@ -80,6 +76,12 @@ const Header = ({}: HeaderProps) => {
     const uniContract = await getMTKContract();
     setUniContract(uniContract);
   };
+
+  const handleAccountsChanged = (accounts: any) => {
+    setSignerAddress(accounts);
+    setAddedWallet(accounts);
+  };
+
   const isWalletConnected = () => signer !== undefined;
 
   const getSigner = async (provider: any) => {
@@ -93,7 +95,6 @@ const Header = ({}: HeaderProps) => {
       setAddedWallet(address);
     });
   };
-
 
   const getWalletAddress = (signer: any, uniContract: any) => {
     {
@@ -198,8 +199,6 @@ const Header = ({}: HeaderProps) => {
           }
           type={"primary"}
         />
-
-        {/* <PoweroffOutlined /> */}
       </div>
     </header>
   );
