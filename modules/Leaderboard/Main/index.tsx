@@ -18,8 +18,8 @@ const Main = ({}: MainProps) => {
 
   const {
     data: getInfoResponse,
-    isLoading: isGetInfoLoading,
     refetch: rfInfo,
+    isFetching: isGetInfoLoading,
   } = useGetInfo(addedWallet);
 
   const userPoint = getInfoResponse?.data?.data?.point?.point;
@@ -30,8 +30,8 @@ const Main = ({}: MainProps) => {
   };
   const {
     data: getToppointsResponse,
-    isLoading: isGetTopPointLoading,
     refetch: rfTopPoint,
+    isFetching: isGetTopPointLoading,
   } = useGetTopPoint(wallets);
 
   const topPoint = getToppointsResponse?.data?.data;

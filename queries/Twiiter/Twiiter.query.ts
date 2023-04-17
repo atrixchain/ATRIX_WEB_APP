@@ -35,6 +35,7 @@ export const useGetInfo = (wallet: string) => {
     [TWIITER_CACHE_KEYS.get_info, wallet],
     () => TwiiterApis.getInfo(wallet),
     {
+      enabled: !!wallet,
       onSuccess: (result: any) => setPoints(result?.data?.data.point.point),
     }
   );
@@ -46,6 +47,7 @@ export const useGetTopPoint = (data: any) => {
     [TWIITER_CACHE_KEYS.get_top_point, data],
     () => TwiiterApis.getTopPoint(data),
     {
+      enabled: !!data.wallet_address,
       onSuccess: (result: any) => {
         setTopPoint(result?.data?.data);
       },
