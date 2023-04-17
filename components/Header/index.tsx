@@ -41,7 +41,7 @@ const Header = ({}: HeaderProps) => {
 
   useEffect(() => {
     onLoad();
-  }, [signerAddress]);
+  }, []);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
