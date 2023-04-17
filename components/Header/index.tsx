@@ -21,6 +21,7 @@ export enum ToastifyStatus {
 }
 
 const Header = ({}: HeaderProps) => {
+  const { ethereum }: any = window;
   const [provider, setProvider] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
   const [signerAddress, setSignerAddress] = useState<any>(undefined);
@@ -41,7 +42,7 @@ const Header = ({}: HeaderProps) => {
 
   useEffect(() => {
     onLoad();
-  }, []);
+  }, [ethereum]);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
@@ -80,6 +81,7 @@ const Header = ({}: HeaderProps) => {
   const handleAccountsChanged = (accounts: any) => {
     setSignerAddress(accounts);
     setAddedWallet(accounts);
+    getWalletAddress(signer, uniContract);
   };
 
   const isWalletConnected = () => signer !== undefined;
