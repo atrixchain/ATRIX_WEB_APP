@@ -4,6 +4,7 @@ import styles from "./Card.module.sass";
 import cn from "classnames";
 import Button from "../Button";
 import { DownOutlined } from "@ant-design/icons";
+import { getTwitterOAuthUrl } from "@/helpers/OAuthProviderUrl";
 
 type CardProps = {
   title: string;
@@ -78,7 +79,10 @@ const AtrixCard = ({
               style={firstButtonPurple ? styles.buttonPurple : styles.button}
               onClick={() =>
                 window
-                  ?.open("https://twitter.com/Atrixchain", "_blank")
+                  ?.open(
+                    getTwitterOAuthUrl("https://app.atrixchain.com/"),
+                    "_blank"
+                  )
                   ?.focus()
               }
               title={<div>{firstButtonTitle}</div>}
