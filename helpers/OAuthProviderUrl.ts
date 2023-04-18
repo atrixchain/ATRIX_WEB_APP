@@ -22,7 +22,5 @@ export const getURLWithQueryParams = (
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join("&");
 
-  console.log(123123, `${baseUrl}?${query}`);
-
   return `${baseUrl}?${query}`;
 };

@@ -4,7 +4,6 @@
 import { IEnvironment } from "./IEnvironment";
 
 const API_LOCAL = process.env.NEXT_PUBLIC_API_LOCAL || "";
-console.log("API_LOCAL", API_LOCAL);
 
 export const environment: IEnvironment = {
   production: false,

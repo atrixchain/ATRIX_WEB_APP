@@ -51,13 +51,10 @@ export const getPrice = async (
   try {
     const { ethereum }: any = window;
     if (ethereum) {
-      const wei = await ethers.utils.parseEther(inputAmount.toString());
-
       const getFirstSymbol = firstSymbol !== "MTK" ? ATR : MTK;
       const getSecondSymbol = secondSymbol !== "ATR" ? MTK : ATR;
 
-      console.log("getFirstSymbol", getFirstSymbol);
-      console.log("getSecondSymbol", getSecondSymbol);
+      const wei = await ethers.utils.parseEther(inputAmount.toString());
 
       const pair = await Fetcher.fetchPairData(
         getFirstSymbol,
@@ -77,8 +74,6 @@ export const getPrice = async (
         ),
         TradeType.EXACT_INPUT
       );
-
-      console.log("trade", trade);
 
       const executionPrice = trade.executionPrice.toSignificant(6);
       const nextMidPrice = trade.nextMidPrice.toSignificant(6);

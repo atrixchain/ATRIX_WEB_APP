@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import cn from "classnames";
 import styles from "./Main.module.sass";
 import Image from "@/components/Image";
@@ -28,13 +29,13 @@ const Main = ({}: MainProps) => {
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isSwapPressed, setIsSwapPressed] = useState(false);
 
-  const [inputAmount, setInputAmount] = useState(0);
+  const [inputAmount, setInputAmount] = useState<number>(0);
   const [slippageAmount, setSlippageAmount] = useState(0.01);
   const [deadlineMinutes, setDeadlineMinutes] = useState<number>(30);
 
   const [firstPickedCrypto, setFirstPickedCrypto] = useState("MTK");
   const [secondPickedCrypto, setSecondPickedCrypto] = useState("ATR");
-  const [outputAmount, setOutputAmount] = useState<any>(0);
+  const [outputAmount, setOutputAmount] = useState<number>(0);
   const [midPrice, setMidPrice] = useState<string>("");
 
   const [transaction, setTransaction] = useState({});
@@ -89,7 +90,11 @@ const Main = ({}: MainProps) => {
     setIsSwapPressed(false);
   };
 
-  const getSwapPrice = (inputAmount: number) => {
+  useEffect(() => {
+    setOutputAmount(0);
+  }, [inputAmount === 0]);
+
+  const getSwapPrice = async (inputAmount: number) => {
     setInputAmount(inputAmount);
 
     const deadlineMinutesValue: number =
@@ -110,6 +115,8 @@ const Main = ({}: MainProps) => {
         setOutputAmount(data[1]);
         setMidPrice(data[2]);
       });
+
+    return swap;
   };
   const confirmSwap = {
     firstPickedCrypto: firstPickedCrypto,
