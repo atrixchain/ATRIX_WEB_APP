@@ -6,7 +6,6 @@ import YourAccountTable from "./YourAccount";
 import TopAccountsTable from "./TopAccounts";
 import YourInvitesTable from "./YourInvites";
 import { useTwiiterStore } from "stores/twiiter.store";
-import { useEffect, useState } from "react";
 import { useGetInfo, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import Loading from "@/components/Loading";
