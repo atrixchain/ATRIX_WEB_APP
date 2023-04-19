@@ -3,6 +3,7 @@ import styles from "./YourAccount.module.sass";
 import { Space } from "antd";
 import Button from "@/components/Button";
 import { useUniswapStore } from "stores/uniswap.store";
+import Image from "@/components/Image";
 
 interface YourAccountProps {
   userPoint: number | null;
@@ -11,7 +12,6 @@ interface YourAccountProps {
 const YourAccountTable = ({ userPoint }: YourAccountProps) => {
   const { addedProvider, isConnected } = useUniswapStore();
 
- 
   const getSigner = async (provider: any) => {
     provider?.send("eth_requestAccounts", []);
     const signer = await provider?.getSigner();
@@ -46,10 +46,19 @@ const YourAccountTable = ({ userPoint }: YourAccountProps) => {
         <Button
           style={styles.button}
           onClick={() =>
-            isConnected ? console.log('Connected') : getSigner(addedProvider)
+            isConnected ? console.log("Connected") : getSigner(addedProvider)
           }
           title={<div>{isConnected ? "Connected" : "Connect Wallet"}</div>}
         />
+        <div className={styles.icon}>
+          <Image
+            src={"/images/Sicon.png"}
+            width={142.65}
+            height={229.13}
+            alt="atrix"
+            priority
+          />
+        </div>
       </Space>
     </div>
   );

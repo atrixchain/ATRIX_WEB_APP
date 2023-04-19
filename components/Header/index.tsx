@@ -7,11 +7,10 @@ import { notification } from "antd";
 import { useEffect, useState } from "react";
 import Button from "../Button";
 const { ethers } = require("ethers");
-import { getMTKContract, getWethContract } from "@/helpers/AlphaRouterService";
+import { getMTKContract } from "@/helpers/AlphaRouterService";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
-
-import { PoweroffOutlined } from "@ant-design/icons";
+import { displayAddress } from "@/constants/system.const";
 interface HeaderProps {}
 export enum ToastifyStatus {
   SUCCESS = "success",
@@ -43,6 +42,7 @@ const Header = ({}: HeaderProps) => {
     onLoad();
   }, []);
 
+  function disconnectMetamask() {}
   const onLoad = async () => {
     const { ethereum }: any = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -117,10 +117,7 @@ const Header = ({}: HeaderProps) => {
     }
   }, [signer, uniContract, isConnected, signerAddress]);
 
-  const displayAddress =
-    signerAddress !== undefined
-      ? `${String(signerAddress).substring(0, 10)}...`
-      : "Connected";
+  const address = displayAddress(signerAddress);
 
   const connectWalletHandler = async () => {
     const { ethereum }: any = window;
@@ -194,7 +191,7 @@ const Header = ({}: HeaderProps) => {
           onClick={connectWalletHandler}
           title={
             <div>
-              {signerAddress !== undefined ? displayAddress : "Connect wallet"}
+              {signerAddress !== undefined ? address : "Connect wallet"}
             </div>
           }
           type={"primary"}

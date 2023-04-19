@@ -3,8 +3,10 @@ import { PropsWithChildren, ReactNode } from "react";
 import styles from "./Card.module.sass";
 import cn from "classnames";
 import Button from "../Button";
-import { DownOutlined } from "@ant-design/icons";
+import { CheckCircleTwoTone, DownOutlined } from "@ant-design/icons";
 import { getTwitterOAuthUrl } from "@/helpers/OAuthProviderUrl";
+import { useUniswapStore } from "stores/uniswap.store";
+import { displayAddress } from "@/constants/system.const";
 
 type CardProps = {
   title: string;
@@ -37,10 +39,27 @@ const AtrixCard = ({
   viewAllButtonTitle,
   isEarnAtrixScreen,
   firstButtonPurple,
-  secondButtonPurple,
   thirdButtonPurple,
   disable,
 }: CardProps) => {
+  const { addedProvider, isConnected, addedWallet, setIsConnected } =
+    useUniswapStore();
+
+  console.log("isConnected", isConnected);
+
+  const getSigner = async (provider: any) => {
+    provider?.send("eth_requestAccounts", []);
+    const signer = await provider?.getSigner();
+    if (signer) {
+      setTimeout(() => {
+        document.location.reload();
+      }, 3000);
+    }
+    return signer;
+  };
+
+  const wallet = displayAddress(addedWallet);
+
   return (
     <Space
       direction="horizontal"
@@ -78,27 +97,39 @@ const AtrixCard = ({
             <Button
               style={firstButtonPurple ? styles.buttonPurple : styles.button}
               onClick={() =>
-                window
-                  ?.open(
-                    getTwitterOAuthUrl(),
-                    "_blank"
-                  )
-                  ?.focus()
+                window?.open(getTwitterOAuthUrl(), "_blank")?.focus()
               }
               title={<div>{firstButtonTitle}</div>}
               type={"primary"}
             />
             {isEarnAtrixScreen && <Divider />}
             <Button
-              style={
-                secondButtonPurple
-                  ? styles.buttonPurple
-                  : disable
-                  ? styles.disabledButton
-                  : styles.button
+              style={cn(styles.button, {
+                [styles.purpleButton]: isConnected && !disable,
+                [styles.disabledButton]: disable,
+              })}
+              onClick={
+                !isEarnAtrixScreen
+                  ? () => getSigner(addedProvider)
+                  : () => console.log(123)
               }
-              onClick={() => console.log(123)}
-              title={<div>{secondButtonTitle}</div>}
+              title={
+                !isConnected || isEarnAtrixScreen ? (
+                  <div>{secondButtonTitle}</div>
+                ) : (
+                  <div>
+                    <Space direction="horizontal">
+                      <div className={styles.walletChecked}>
+                        Request to Wallet
+                      </div>
+                      <div className={styles.accountChecked}>
+                        <CheckCircleTwoTone twoToneColor="#52c41a" />
+                        {` ${wallet}`}
+                      </div>
+                    </Space>
+                  </div>
+                )
+              }
               type={"primary"}
             />
             <div>
