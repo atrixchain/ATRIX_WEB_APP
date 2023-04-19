@@ -3,10 +3,11 @@ const TWITTER_CODE_CHALLENGE = "challenge";
 const TWITTER_AUTH_URL = "https://twitter.com/i/oauth2/authorize";
 const TWITTER_SCOPE = ["tweet.read", "users.read", "offline.access"].join(" ");
 const clinetId = process.env.NEXT_PUBLIC_TWIITER_CLIENT_ID;
-export const getTwitterOAuthUrl = (redirectUri: string) =>
+export const getTwitterOAuthUrl = () =>
   getURLWithQueryParams(TWITTER_AUTH_URL, {
     client_id: clinetId,
-    redirect_uri: redirectUri,
+    redirect_uri:
+      "https://cee8-115-146-120-166.ngrok-free.app/twitter/callback",
     scope: TWITTER_SCOPE,
     state: TWITTER_STATE,
     response_type: "code",

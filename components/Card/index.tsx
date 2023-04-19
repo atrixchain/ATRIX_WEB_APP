@@ -80,7 +80,7 @@ const AtrixCard = ({
               onClick={() =>
                 window
                   ?.open(
-                    getTwitterOAuthUrl("https://app.atrixchain.com/"),
+                    getTwitterOAuthUrl(),
                     "_blank"
                   )
                   ?.focus()
