@@ -5,7 +5,7 @@ export const socials = [
     },
     {
         icon: "discord",
-        href: "https://discord.gg/KKXx8Td5",
+        href: "https://discord.com/invite/8GMBRCCCmu",
     },
     {
         icon: "twitter",
