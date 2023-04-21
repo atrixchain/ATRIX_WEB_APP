@@ -19,7 +19,6 @@ const Main = ({}: MainProps) => {
 
   return (
     <div className={cn("section", styles.section)}>
-
       <Space direction="vertical">
         <div>
           <Card

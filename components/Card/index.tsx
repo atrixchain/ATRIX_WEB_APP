@@ -90,16 +90,14 @@ const AtrixCard = ({
     state: state,
     code: code,
   };
-  const { isFetching: isGetInfoLoading, data: twFetchedDatas } =
+  const { isFetching: isGetInfoLoading} =
     useGetTwitter(getTwitterParams);
 
   useEffect(() => {
-    if (twFetchedDatas) {
-      getTwitterDatas().then((datas: any) => {
-        setTwitterDatas(datas);
-      });
-    }
-  }, [twFetchedDatas]);
+    getTwitterDatas().then((datas: any) => {
+      setTwitterDatas(datas);
+    });
+  }, []);
 
   const handlePostRefSuccess = async (data: any) => {
     openNotification(
