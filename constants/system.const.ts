@@ -8,9 +8,8 @@ export const displayAddress = (address: string) =>
 
 export const getTwitterDatas = async () => {
   try {
-    const twDatas = await JSON.parse(
-      sessionStorage.getItem("twitterDatas") || ""
-    );
+    const getTwitterDatas = sessionStorage.getItem("twitterDatas") || "";
+    const twDatas = await JSON.parse(getTwitterDatas);
     return twDatas;
   } catch (err) {
     console.log(err);
