@@ -5,8 +5,8 @@ import { Col, Row } from "antd";
 import YourAccountTable from "./YourAccount";
 import TopAccountsTable from "./TopAccounts";
 import YourInvitesTable from "./YourInvites";
-import { useTwiiterStore } from "stores/twiiter.store";
-import { useGetInfo, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
+import { useTwitterStore } from "stores/twitter.store";
+import { useGetInfo, useGetTopPoint } from "queries/Twitter/Twitter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import Loading from "@/components/Loading";
 

@@ -1,12 +1,20 @@
-import { Divider, Space } from "antd";
-import { PropsWithChildren, ReactNode } from "react";
+import { Divider, notification, Space } from "antd";
 import styles from "./Card.module.sass";
 import cn from "classnames";
 import Button from "../Button";
 import { CheckCircleTwoTone, DownOutlined } from "@ant-design/icons";
 import { getTwitterOAuthUrl } from "@/helpers/OAuthProviderUrl";
 import { useUniswapStore } from "stores/uniswap.store";
-import { displayAddress } from "@/constants/system.const";
+import { displayAddress, getTwitterDatas } from "@/constants/system.const";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { ITwitterDatas } from "apis/Twitter.type";
+import {
+  useGetTwitter,
+  usePostRequestAssets,
+} from "queries/Twitter/Twitter.query";
+import { openNotification } from "@/helpers/pushNotification";
+import Loading from "../Loading";
 
 type CardProps = {
   title: string;
@@ -42,11 +50,91 @@ const AtrixCard = ({
   thirdButtonPurple,
   disable,
 }: CardProps) => {
+  const router = useRouter();
   const { addedProvider, isConnected, addedWallet, setIsConnected } =
     useUniswapStore();
+  const [api, contextHolder] = notification.useNotification();
 
-  console.log("isConnected", isConnected);
+  const [twitterDatas, setTwitterDatas] = useState<ITwitterDatas>();
 
+  const wallet = displayAddress(addedWallet);
+  const twUserName = twitterDatas?.twitter_username;
+  const twId = twitterDatas?.twitter_id;
+
+  const query = router.query;
+  const [code, setCode] = useState<any>();
+  const [state, setState] = useState<any>();
+
+  useEffect(() => {
+    if (router.isReady) {
+      router.push(
+        {
+          query: {
+            slug: query.slug,
+          },
+        },
+        undefined,
+        { shallow: true }
+      );
+      const code = query.code;
+      const state = query.state;
+      if (code && state) {
+        setCode(code);
+        setState(state);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
+  const getTwitterParams = {
+    state: state,
+    code: code,
+  };
+  const { isFetching: isGetInfoLoading, data: twFetchedDatas } =
+    useGetTwitter(getTwitterParams);
+
+  useEffect(() => {
+    if (twFetchedDatas) {
+      getTwitterDatas().then((datas: any) => {
+        setTwitterDatas(datas);
+      });
+    }
+  }, [twFetchedDatas]);
+
+  const handlePostRefSuccess = async (data: any) => {
+    openNotification(
+      "Successfully Requested Assets",
+      data.message,
+      "success",
+      api,
+      null
+    );
+  };
+  const handlePostRefError = (err: any) => {
+    openNotification(
+      "Failed Requested Assets",
+      err.message,
+      "error",
+      api,
+      null
+    );
+  };
+  const {
+    mutate: requestAssets,
+    data: getInfoResponse,
+    isLoading: isPostRefLoading,
+  } = usePostRequestAssets({
+    onSuccess: handlePostRefSuccess,
+    onError: handlePostRefError,
+  });
+
+  const handleRequestAssets = () => {
+    const data = {
+      wallet_address: addedWallet,
+      twitter_id: twId,
+    };
+    requestAssets(data);
+  };
   const getSigner = async (provider: any) => {
     provider?.send("eth_requestAccounts", []);
     const signer = await provider?.getSigner();
@@ -58,13 +146,13 @@ const AtrixCard = ({
     return signer;
   };
 
-  const wallet = displayAddress(addedWallet);
-
   return (
     <Space
       direction="horizontal"
       className={!showButtons ? styles.cardFlexStart : styles.card}
     >
+      {(isPostRefLoading && <Loading />) || (isGetInfoLoading && <Loading />)}
+      {contextHolder}
       <Space direction="vertical">
         <div className={styles.title}>{title}</div>
         <div
@@ -95,11 +183,27 @@ const AtrixCard = ({
         {showButtons && (
           <div className={styles.buttonContainer}>
             <Button
-              style={firstButtonPurple ? styles.buttonPurple : styles.button}
-              onClick={() =>
-                window?.open(getTwitterOAuthUrl(), "_blank")?.focus()
+              style={cn(styles.button, {
+                [styles.purpleButton]: twitterDatas,
+                [styles.disabledButton]: disable,
+              })}
+              onClick={() => router.push(getTwitterOAuthUrl())}
+              title={
+                twitterDatas ? (
+                  <div>
+                    <Space direction="horizontal">
+                      <div className={styles.twitterChecked}>
+                        Twitter Verified
+                      </div>
+                      <div className={styles.twitterNameChecked}>
+                        {` @${twUserName}`}
+                      </div>
+                    </Space>
+                  </div>
+                ) : (
+                  <div>{firstButtonTitle}</div>
+                )
               }
-              title={<div>{firstButtonTitle}</div>}
               type={"primary"}
             />
             {isEarnAtrixScreen && <Divider />}
@@ -132,6 +236,15 @@ const AtrixCard = ({
               }
               type={"primary"}
             />
+
+            {isThirdButtonOpacity && twitterDatas && addedWallet ? (
+              <Button
+                style={styles.button}
+                onClick={handleRequestAssets}
+                title={<div>Request Assets</div>}
+                type={"primary"}
+              />
+            ) : null}
             <div>
               {isThirdButtonOpacity ? (
                 <div className={styles.opacityText}>{opacityText}</div>

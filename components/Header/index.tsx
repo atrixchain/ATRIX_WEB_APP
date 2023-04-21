@@ -41,8 +41,6 @@ const Header = ({}: HeaderProps) => {
   useEffect(() => {
     onLoad();
   }, []);
-
-  function disconnectMetamask() {}
   const onLoad = async () => {
     const { ethereum }: any = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -185,7 +183,6 @@ const Header = ({}: HeaderProps) => {
           }
           type={"primary"}
         />
-
         <Button
           style={styles.button}
           onClick={connectWalletHandler}

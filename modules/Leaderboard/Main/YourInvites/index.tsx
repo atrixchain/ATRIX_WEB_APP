@@ -3,7 +3,7 @@ import { Input, notification, Space } from "antd";
 import Button from "@/components/Button";
 import { ENTER_REF } from "@/constants/commom";
 import { useState } from "react";
-import { usePostRef, useGetTopPoint } from "queries/Twiiter/Twiiter.query";
+import { usePostRef } from "queries/Twitter/Twitter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
 import Loading from "@/components/Loading";
