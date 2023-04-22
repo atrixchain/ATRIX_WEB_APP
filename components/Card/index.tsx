@@ -51,19 +51,19 @@ const AtrixCard = ({
   disable,
 }: CardProps) => {
   const router = useRouter();
+  const [api, contextHolder] = notification.useNotification();
+  const [code, setCode] = useState<any>();
+  const [state, setState] = useState<any>();
+  const [twitterDatas, setTwitterDatas] = useState<ITwitterDatas>();
+
   const { addedProvider, isConnected, addedWallet, setIsConnected } =
     useUniswapStore();
-  const [api, contextHolder] = notification.useNotification();
-
-  const [twitterDatas, setTwitterDatas] = useState<ITwitterDatas>();
 
   const wallet = displayAddress(addedWallet);
   const twUserName = twitterDatas?.twitter_username;
   const twId = twitterDatas?.twitter_id;
 
   const query = router.query;
-  const [code, setCode] = useState<any>();
-  const [state, setState] = useState<any>();
 
   useEffect(() => {
     if (router.isReady) {
@@ -91,13 +91,14 @@ const AtrixCard = ({
   const { isFetching: isGetInfoLoading, data: twiiterDatas } =
     useGetTwitter(getTwitterParams);
 
+  console.log("twiiterDatas", twiiterDatas);
+
   useEffect(() => {
-    if (twiiterDatas !== undefined) {
+    if (twiiterDatas) {
       const getTwitterDatas = twiiterDatas?.data?.data;
-      console.log("twiiterDatas", twiiterDatas);
 
       setTwitterDatas(getTwitterDatas);
-    } else {
+    } else if (!twiiterDatas) {
       getTwitterDatas().then((datas: any) => {
         setTwitterDatas(datas);
       });
