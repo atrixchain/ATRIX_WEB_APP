@@ -92,8 +92,10 @@ const AtrixCard = ({
     useGetTwitter(getTwitterParams);
 
   useEffect(() => {
-    if (twiiterDatas) {
+    if (twiiterDatas !== undefined) {
       const getTwitterDatas = twiiterDatas?.data?.data;
+      console.log("twiiterDatas", twiiterDatas);
+
       setTwitterDatas(getTwitterDatas);
     } else {
       getTwitterDatas().then((datas: any) => {
