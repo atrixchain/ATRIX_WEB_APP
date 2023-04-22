@@ -91,8 +91,6 @@ const AtrixCard = ({
   const { isFetching: isGetInfoLoading, data: twiiterDatas } =
     useGetTwitter(getTwitterParams);
 
-  console.log("twiiterDatas", twiiterDatas);
-
   useEffect(() => {
     if (twiiterDatas !== undefined) {
       const getTwitterDatas = twiiterDatas?.data?.data;
