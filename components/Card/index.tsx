@@ -102,7 +102,7 @@ const AtrixCard = ({
         setTwitterDatas(datas);
       });
     }
-  }, []);
+  }, [twiiterDatas]);
 
   const handlePostRefSuccess = async (data: any) => {
     openNotification(
