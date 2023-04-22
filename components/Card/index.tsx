@@ -69,9 +69,7 @@ const AtrixCard = ({
     if (router.isReady) {
       router.push(
         {
-          query: {
-            slug: query.slug,
-          },
+          query: {},
         },
         undefined,
         { shallow: true }
@@ -90,13 +88,18 @@ const AtrixCard = ({
     state: state,
     code: code,
   };
-  const { isFetching: isGetInfoLoading} =
+  const { isFetching: isGetInfoLoading, data: twiiterDatas } =
     useGetTwitter(getTwitterParams);
 
   useEffect(() => {
-    getTwitterDatas().then((datas: any) => {
-      setTwitterDatas(datas);
-    });
+    if (twiiterDatas) {
+      const getTwitterDatas = twiiterDatas?.data?.data;
+      setTwitterDatas(getTwitterDatas);
+    } else {
+      getTwitterDatas().then((datas: any) => {
+        setTwitterDatas(datas);
+      });
+    }
   }, []);
 
   const handlePostRefSuccess = async (data: any) => {

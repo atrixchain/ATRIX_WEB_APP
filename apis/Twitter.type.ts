@@ -5,11 +5,11 @@ export type ITwitterParams = {
 };
 
 export type ITwitterDatas = {
-  id?: string;
-  twitter_id?: string;
-  twitter_name?: string;
-  twitter_username?: string;
-  wallet_address?: string;
+  id?: string | null;
+  twitter_id?: string | null;
+  twitter_name?: string | null;
+  twitter_username?: string | null;
+  wallet_address?: string | null;
 };
 export type IGetTwitterData = {
   code: string;

@@ -12,6 +12,6 @@ export const getTwitterDatas = async () => {
     const twDatas = await JSON.parse(getTwitterDatas);
     return twDatas;
   } catch (err) {
-    console.log(err);
+    return null;
   }
 };
