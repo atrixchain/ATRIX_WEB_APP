@@ -11,6 +11,9 @@ import { getMTKContract } from "@/helpers/AlphaRouterService";
 import { useUniswapStore } from "stores/uniswap.store";
 import { openNotification } from "@/helpers/pushNotification";
 import { displayAddress } from "@/constants/system.const";
+import { useRouter } from "next/router";
+import { usePostRef } from "queries/Twitter/Twitter.query";
+import Loading from "../Loading";
 interface HeaderProps {}
 export enum ToastifyStatus {
   SUCCESS = "success",
@@ -20,13 +23,15 @@ export enum ToastifyStatus {
 }
 
 const Header = ({}: HeaderProps) => {
+  const router = useRouter();
+  const query = router.query;
+  const [refAddress, setRefAddress] = useState<any>();
+
   const [provider, setProvider] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
   const [signerAddress, setSignerAddress] = useState<any>(undefined);
 
-  const [wethContract, setWethContract] = useState(undefined);
   const [uniContract, setUniContract] = useState(undefined);
-  const [wethAmount, setWethAmount] = useState(undefined);
 
   const [uniAmount, setUniAmount] = useState(0);
   const [api, contextHolder] = notification.useNotification();
@@ -38,9 +43,63 @@ const Header = ({}: HeaderProps) => {
     isConnected,
   } = useUniswapStore();
 
+  const handlePostRefSuccess = async (data: any) => {
+    data
+      ? openNotification(
+          "Successfully invited by refferal code",
+          data.message,
+          "success",
+          api,
+          null
+        )
+      : null;
+  };
+  const handlePostRefError = (err: any) => {
+    openNotification("Failed", err.message, "error", api, null);
+  };
+  const {
+    mutate: postRef,
+    data: getInfoResponse,
+    isLoading: isPostRefLoading,
+  } = usePostRef({
+    onSuccess: handlePostRefSuccess,
+    onError: handlePostRefError,
+  });
+
+  const handlePostRef = () => {
+    const data = {
+      wallet_address: signerAddress,
+      ref_address: refAddress,
+    };
+    postRef(data);
+  };
+
+  //EFFECTS
+  useEffect(() => {
+    if (router.isReady) {
+      router.push(
+        {
+          query: {},
+        },
+        undefined,
+        { shallow: true }
+      );
+      const ref = query.ref;
+      if (ref) {
+        setRefAddress(ref);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
   useEffect(() => {
     onLoad();
   }, []);
+
+  useEffect(() => {
+    handlePostRef();
+  }, [refAddress]);
+
   const onLoad = async () => {
     const { ethereum }: any = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -147,6 +206,7 @@ const Header = ({}: HeaderProps) => {
   return (
     <header className={cn(styles.header)}>
       {contextHolder}
+      {isPostRefLoading && <Loading />}
       <div className={cn("container-wide", styles.container)}>
         <Logo white className={styles.logo} />
         <div className={styles.menu}>

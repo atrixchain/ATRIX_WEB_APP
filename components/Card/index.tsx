@@ -2,7 +2,10 @@ import { Divider, notification, Space } from "antd";
 import styles from "./Card.module.sass";
 import cn from "classnames";
 import Button from "../Button";
-import { CheckCircleTwoTone, DownOutlined } from "@ant-design/icons";
+import {
+  CheckCircleTwoTone,
+  DownOutlined,
+} from "@ant-design/icons";
 import { getTwitterOAuthUrl } from "@/helpers/OAuthProviderUrl";
 import { useUniswapStore } from "stores/uniswap.store";
 import { displayAddress, getTwitterDatas } from "@/constants/system.const";
@@ -15,6 +18,8 @@ import {
 } from "queries/Twitter/Twitter.query";
 import { openNotification } from "@/helpers/pushNotification";
 import Loading from "../Loading";
+import { TWITTER_SHARE_LINK } from "@/constants/commom";
+import Image from "@/components/Image";
 
 type CardProps = {
   title: string;
@@ -51,10 +56,13 @@ const AtrixCard = ({
   disable,
 }: CardProps) => {
   const router = useRouter();
+  const query = router.query;
+
   const [api, contextHolder] = notification.useNotification();
   const [code, setCode] = useState<any>();
   const [state, setState] = useState<any>();
   const [twitterDatas, setTwitterDatas] = useState<ITwitterDatas>();
+  const [checkCopied, setCheckCopied] = useState<boolean>(false);
 
   const { addedProvider, isConnected, addedWallet, setIsConnected } =
     useUniswapStore();
@@ -62,8 +70,18 @@ const AtrixCard = ({
   const wallet = displayAddress(addedWallet);
   const twUserName = twitterDatas?.twitter_username;
   const twId = twitterDatas?.twitter_id;
+  const base = process.env.NEXT_PUBLIC_BASE_URL;
+  // const base = "http://localhost:3000";
 
-  const query = router.query;
+  const links = base + `?ref=${addedWallet}`;
+  const copylink = () => {
+    if (!addedWallet) {
+      openNotification("Please connect your wallet", "", "warning", api, null);
+    } else {
+      navigator.clipboard.writeText(links);
+      setCheckCopied(true);
+    }
+  };
 
   useEffect(() => {
     if (router.isReady) {
@@ -88,19 +106,20 @@ const AtrixCard = ({
     state: state,
     code: code,
   };
-  const { isFetching: isGetInfoLoading, data: twiiterDatas } =
+  const { isFetching: isGetInfoLoading, data: twDatas } =
     useGetTwitter(getTwitterParams);
 
   useEffect(() => {
-    if (twiiterDatas !== undefined) {
-      const getTwitterDatas = twiiterDatas?.data?.data;
+    if (twDatas !== undefined) {
+      const getTwitterDatas = twDatas?.data?.data;
+
       setTwitterDatas(getTwitterDatas);
-    } else if (twiiterDatas === undefined) {
+    } else if (twDatas === undefined) {
       getTwitterDatas().then((datas: any) => {
         setTwitterDatas(datas);
       });
     }
-  }, [twiiterDatas]);
+  }, [twDatas]);
 
   const handlePostRefSuccess = async (data: any) => {
     openNotification(
@@ -153,6 +172,7 @@ const AtrixCard = ({
       className={!showButtons ? styles.cardFlexStart : styles.card}
     >
       {(isPostRefLoading && <Loading />) || (isGetInfoLoading && <Loading />)}
+
       {contextHolder}
       <Space direction="vertical">
         <div className={styles.title}>{title}</div>
@@ -183,60 +203,94 @@ const AtrixCard = ({
       <Space direction="vertical">
         {showButtons && (
           <div className={styles.buttonContainer}>
-            <Button
-              style={cn(styles.button, {
-                [styles.purpleButton]: twitterDatas,
-                [styles.disabledButton]: disable,
-              })}
-              onClick={() => router.push(getTwitterOAuthUrl())}
-              title={
-                twitterDatas ? (
-                  <div>
-                    <Space direction="horizontal">
-                      <div className={styles.twitterChecked}>
-                        Twitter Verified
-                      </div>
-                      <div className={styles.twitterNameChecked}>
-                        {` @${twUserName}`}
-                      </div>
-                    </Space>
-                  </div>
-                ) : (
-                  <div>{firstButtonTitle}</div>
-                )
-              }
-              type={"primary"}
-            />
-            {isEarnAtrixScreen && <Divider />}
-            <Button
-              style={cn(styles.button, {
-                [styles.purpleButton]: isConnected && !disable,
-                [styles.disabledButton]: disable,
-              })}
-              onClick={
-                !isEarnAtrixScreen
-                  ? () => getSigner(addedProvider)
-                  : () => console.log(123)
-              }
-              title={
-                !isConnected || isEarnAtrixScreen ? (
-                  <div>{secondButtonTitle}</div>
-                ) : (
-                  <div>
-                    <Space direction="horizontal">
-                      <div className={styles.walletChecked}>
-                        Request to Wallet
-                      </div>
-                      <div className={styles.accountChecked}>
-                        <CheckCircleTwoTone twoToneColor="#52c41a" />
-                        {` ${wallet}`}
-                      </div>
-                    </Space>
-                  </div>
-                )
-              }
-              type={"primary"}
-            />
+            {isEarnAtrixScreen && twitterDatas ? (
+              <Button
+                style={styles.purpleButton}
+                onClick={() =>
+                  window?.open(TWITTER_SHARE_LINK, "_blank")?.focus()
+                }
+                title={<div>{secondButtonTitle}</div>}
+                type={"primary"}
+              />
+            ) : (
+              <Button
+                style={cn(styles.button, {
+                  [styles.purpleButton]: twitterDatas,
+                })}
+                onClick={() => router.push(getTwitterOAuthUrl())}
+                title={
+                  twitterDatas ? (
+                    <div>
+                      <Space direction="horizontal">
+                        <div className={styles.twitterChecked}>
+                          Twitter Verified
+                        </div>
+                        <div className={styles.twitterNameChecked}>
+                          {` @${twUserName}`}
+                        </div>
+                      </Space>
+                    </div>
+                  ) : (
+                    <div>{firstButtonTitle}</div>
+                  )
+                }
+                type={"primary"}
+              />
+            )}
+
+            {isEarnAtrixScreen && !twitterDatas ? <Divider /> : null}
+            {isEarnAtrixScreen && twitterDatas ? (
+              <Button
+                style={styles.button}
+                onClick={() => copylink()}
+                title={
+                  checkCopied ? (
+                    <div className={styles.checkedButton}>
+                      {thirdButtonTitle}
+                      <Image
+                        src={"/images/checked.png"}
+                        width={30}
+                        height={30}
+                        style={{ paddingLeft: "5px", paddingBottom: "5px" }}
+                      />
+                    </div>
+                  ) : (
+                    <div>{thirdButtonTitle}</div>
+                  )
+                }
+                type={"primary"}
+              />
+            ) : (
+              <Button
+                style={cn(styles.button, {
+                  [styles.purpleButton]: isConnected && !disable,
+                  [styles.disabledButton]: disable,
+                })}
+                onClick={
+                  !isEarnAtrixScreen
+                    ? () => getSigner(addedProvider)
+                    : () => console.log(123)
+                }
+                title={
+                  !isConnected || isEarnAtrixScreen ? (
+                    <div>{secondButtonTitle}</div>
+                  ) : (
+                    <div>
+                      <Space direction="horizontal">
+                        <div className={styles.walletChecked}>
+                          Request to Wallet
+                        </div>
+                        <div className={styles.accountChecked}>
+                          <CheckCircleTwoTone twoToneColor="#52c41a" />
+                          {` ${wallet}`}
+                        </div>
+                      </Space>
+                    </div>
+                  )
+                }
+                type={"primary"}
+              />
+            )}
 
             {isThirdButtonOpacity && twitterDatas && addedWallet ? (
               <Button
@@ -249,7 +303,7 @@ const AtrixCard = ({
             <div>
               {isThirdButtonOpacity ? (
                 <div className={styles.opacityText}>{opacityText}</div>
-              ) : (
+              ) : !twitterDatas ? (
                 <Button
                   style={
                     thirdButtonPurple
@@ -262,7 +316,7 @@ const AtrixCard = ({
                   title={<div>{thirdButtonTitle}</div>}
                   type={"primary"}
                 />
-              )}
+              ) : null}
             </div>
           </div>
         )}

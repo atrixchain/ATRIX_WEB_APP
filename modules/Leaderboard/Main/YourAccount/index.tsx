@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./YourAccount.module.sass";
 import { Space } from "antd";
 import Button from "@/components/Button";
 import { useUniswapStore } from "stores/uniswap.store";
 import Image from "@/components/Image";
+import { getTwitterDatas } from "@/constants/system.const";
+import { ITwitterDatas } from "apis/Twitter.type";
 
 interface YourAccountProps {
   userPoint: number | null;
@@ -11,6 +13,8 @@ interface YourAccountProps {
 
 const YourAccountTable = ({ userPoint }: YourAccountProps) => {
   const { addedProvider, isConnected } = useUniswapStore();
+  const [twitterDatas, setTwitterDatas] = useState<ITwitterDatas>();
+  const twUserName = twitterDatas?.twitter_username;
 
   const getSigner = async (provider: any) => {
     provider?.send("eth_requestAccounts", []);
@@ -22,6 +26,16 @@ const YourAccountTable = ({ userPoint }: YourAccountProps) => {
     }
     return signer;
   };
+
+  const disconnectTwiiter = async () => {
+    sessionStorage.clear();
+    setTwitterDatas({});
+  };
+  useEffect(() => {
+    getTwitterDatas().then((datas: any) => {
+      setTwitterDatas(datas);
+    });
+  }, []);
 
   return (
     <div className={styles.yourAccountTable}>
@@ -40,8 +54,17 @@ const YourAccountTable = ({ userPoint }: YourAccountProps) => {
 
         <div className={styles.twitter}>Twitter:</div>
         <Space direction="horizontal" className={styles.spacebetween}>
-          <div className={styles.name}>@Henry102</div>
-          <div className={styles.status}>disconnect</div>
+          <div className={styles.name}>{`@${
+            twUserName ? twUserName : "Please verify your twitter"
+          }`}</div>
+          {twUserName ? (
+            <Button
+              type="link"
+              style={styles.status}
+              title={<div>disconnect</div>}
+              onClick={disconnectTwiiter}
+            />
+          ) : null}
         </Space>
         <Button
           style={styles.button}
