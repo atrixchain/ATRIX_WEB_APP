@@ -52,6 +52,7 @@ const Header = ({}: HeaderProps) => {
           null
         )
       : null;
+    setRefAddress("");
   };
   const handlePostRefError = (err: any) => {
     openNotification("Failed", err.message, "error", api, null);
@@ -96,8 +97,10 @@ const Header = ({}: HeaderProps) => {
   }, []);
 
   useEffect(() => {
-    handlePostRef();
-  }, []);
+    if (refAddress && signerAddress) {
+      handlePostRef();
+    }
+  }, [refAddress, signerAddress]);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
