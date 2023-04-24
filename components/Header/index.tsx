@@ -70,7 +70,9 @@ const Header = ({}: HeaderProps) => {
       wallet_address: signerAddress,
       ref_address: refAddress,
     };
-    postRef(data);
+    if (refAddress && signerAddress) {
+      postRef(data);
+    }
   };
 
   //EFFECTS
@@ -97,7 +99,7 @@ const Header = ({}: HeaderProps) => {
 
   useEffect(() => {
     handlePostRef();
-  }, [refAddress !== "", signerAddress !== ""]);
+  }, []);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
