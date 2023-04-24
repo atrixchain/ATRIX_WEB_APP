@@ -26,7 +26,8 @@ const Header = ({}: HeaderProps) => {
   const router = useRouter();
   const query = router.query;
   const [refAddress, setRefAddress] = useState<any>();
-
+  console.log('refAddress', refAddress);
+  
   const [provider, setProvider] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
   const [signerAddress, setSignerAddress] = useState<any>(undefined);
