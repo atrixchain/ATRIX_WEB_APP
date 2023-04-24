@@ -5,7 +5,6 @@ import { Col, Row } from "antd";
 import YourAccountTable from "./YourAccount";
 import TopAccountsTable from "./TopAccounts";
 import YourInvitesTable from "./YourInvites";
-import { useTwitterStore } from "stores/twitter.store";
 import { useGetInfo, useGetTopPoint } from "queries/Twitter/Twitter.query";
 import { useUniswapStore } from "stores/uniswap.store";
 import Loading from "@/components/Loading";
@@ -44,7 +43,7 @@ const Main = ({}: MainProps) => {
             <TopAccountsTable topPoint={topPoint} />
           </div>
           <div className={styles.yourInvites}>
-            <YourInvitesTable rfTopPoint={rfTopPoint} rfInfo={rfInfo} />
+            <YourInvitesTable />
           </div>
         </Col>
         <Col span={7}>
