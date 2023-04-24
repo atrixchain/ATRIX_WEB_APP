@@ -100,7 +100,7 @@ const Header = ({}: HeaderProps) => {
     if (refAddress && signerAddress) {
       handlePostRef();
     }
-  }, [refAddress || signerAddress]);
+  }, [refAddress, signerAddress]);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
