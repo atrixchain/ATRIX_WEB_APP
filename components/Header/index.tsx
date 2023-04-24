@@ -54,6 +54,7 @@ const Header = ({}: HeaderProps) => {
           null
         )
       : null;
+    setRefAddress("");
   };
   const handlePostRefError = (err: any) => {
     openNotification("Failed", err.message, "error", api, null);
@@ -67,7 +68,7 @@ const Header = ({}: HeaderProps) => {
     onError: handlePostRefError,
   });
 
-  const handlePostRef = () => {
+  const handlePostRef = async () => {
     const data = {
       wallet_address: signerAddress,
       ref_address: refAddress,
