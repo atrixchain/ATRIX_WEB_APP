@@ -70,9 +70,7 @@ const Header = ({}: HeaderProps) => {
       wallet_address: signerAddress,
       ref_address: refAddress,
     };
-    if (refAddress && signerAddress) {
-      postRef(data);
-    }
+    postRef(data);
   };
 
   //EFFECTS
