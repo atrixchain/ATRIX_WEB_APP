@@ -25,7 +25,7 @@ export enum ToastifyStatus {
 const Header = ({}: HeaderProps) => {
   const router = useRouter();
   const query = router.query;
-  const [refAddress, setRefAddress] = useState<any>();
+  const [refAddress, setRefAddress] = useState<string | any>("");
   console.log("refAddress", refAddress);
 
   const [provider, setProvider] = useState(undefined);
@@ -99,7 +99,7 @@ const Header = ({}: HeaderProps) => {
 
   useEffect(() => {
     handlePostRef();
-  }, [refAddress !== undefined]);
+  }, [refAddress !== ""]);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
