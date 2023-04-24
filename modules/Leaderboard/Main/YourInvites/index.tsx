@@ -11,7 +11,7 @@ const YourInvitesTable = () => {
       <Space direction="vertical">
         <Space direction="horizontal" className={styles.tableHeader}>
           <div className={styles.bold}>Your Invites</div>
-          <div className={styles.headerTotal}>Total Confirmed: 0</div>
+          {/* <div className={styles.headerTotal}>Total Confirmed: 0</div> */}
         </Space>
 
         <Button

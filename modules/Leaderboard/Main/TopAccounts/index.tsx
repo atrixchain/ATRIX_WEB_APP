@@ -14,7 +14,7 @@ const TopAccountsTable = ({ topPoint }: TopAccountProps) => {
       <Space direction="vertical">
         <Space direction="horizontal" className={styles.tableHeader}>
           <div className={styles.bold}>Top Accounts</div>
-          <div className={styles.headerTotal}>Total Accounts: 0M</div>
+          {/* <div className={styles.headerTotal}>Total Accounts: 0M</div> */}
         </Space>
         <Space direction="horizontal" className={styles.table}>
           <Space direction="horizontal" className={styles.name}>

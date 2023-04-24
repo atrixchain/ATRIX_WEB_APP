@@ -97,7 +97,7 @@ const Header = ({}: HeaderProps) => {
 
   useEffect(() => {
     handlePostRef();
-  }, [refAddress !== ""]);
+  }, [refAddress, signerAddress]);
 
   const onLoad = async () => {
     const { ethereum }: any = window;
