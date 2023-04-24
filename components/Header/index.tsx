@@ -26,8 +26,6 @@ const Header = ({}: HeaderProps) => {
   const router = useRouter();
   const query = router.query;
   const [refAddress, setRefAddress] = useState<string | any>("");
-  console.log("refAddress", refAddress);
-
   const [provider, setProvider] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
   const [signerAddress, setSignerAddress] = useState<any>(undefined);
@@ -54,7 +52,6 @@ const Header = ({}: HeaderProps) => {
           null
         )
       : null;
-    setRefAddress("");
   };
   const handlePostRefError = (err: any) => {
     openNotification("Failed", err.message, "error", api, null);

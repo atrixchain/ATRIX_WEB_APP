@@ -24,9 +24,6 @@ export const usePostRef = ({ onSuccess, onError }: IQueryProps) => {
     (data: ITwitterParams) => TwitterApis.postRef(data),
     {
       onSuccess: (result: any) => {
-        queryClient.invalidateQueries([TWITTER_CACHE_KEYS.get_top_point]);
-        queryClient.invalidateQueries([TWITTER_CACHE_KEYS.get_info]);
-
         onSuccess(result?.data);
       },
       onError: (err: any) => onError(err?.response?.data),
