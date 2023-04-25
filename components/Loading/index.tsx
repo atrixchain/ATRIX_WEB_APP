@@ -10,7 +10,7 @@ const Loading = ({ suspense }: LoadingProps) => (
   <div className={suspense ? styles.loadingSuspense : styles.loadingGlobal}>
     <div className={suspense ? styles.loadingIconSuspense : styles.loading}>
       {suspense ? (
-        <Image src={"/images/logo.svg"} width={300} height={300} />
+        <Image src={"/images/logo.svg"} width={300} height={300} alt={"logo"} />
       ) : (
         <SyncLoader color="#5442d0" size={20} />
       )}
