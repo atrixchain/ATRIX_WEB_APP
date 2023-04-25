@@ -4,6 +4,8 @@ import type { AppProps } from "next/app";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "../styles/app.sass";
+import "nprogress/nprogress.css";
+import dynamic from "next/dynamic";
 // import {
 //   EthereumClient,
 //   w3mConnectors,
@@ -12,7 +14,12 @@ import "../styles/app.sass";
 // import { Web3Modal } from "@web3modal/react";
 // import { configureChains, createClient, WagmiConfig } from "wagmi";
 // import { arbitrum, mainnet, polygon } from "wagmi/chains";
-
+// const TopProgressBar = dynamic(
+//   () => {
+//     return import("components/TopProgressBar");
+//   },
+//   { ssr: false }
+// );
 function MyApp({ Component, pageProps }: AppProps) {
   // const chains = [arbitrum, mainnet, polygon];
   // const projectId = "c57df66246ebf09d372877167e996915";
@@ -30,8 +37,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <ParallaxProvider>
           {/* <WagmiConfig client={wagmiClient}> */}
-            <Component {...pageProps} />
-            <ReactQueryDevtools initialIsOpen={false} />
+          {/* <TopProgressBar /> */}
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
           {/* </WagmiConfig> */}
         </ParallaxProvider>
       </QueryClientProvider>

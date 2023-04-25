@@ -1,8 +1,13 @@
+import Loading from "@/components/Loading";
 import type { NextPage } from "next";
-import Faucet from "modules/Faucet";
+import dynamic from "next/dynamic";
+
+const DynamicFaucet = dynamic(() => import("modules/Faucet"), {
+  loading: () => <Loading suspense={true}/>,
+});
 
 const Home: NextPage = () => {
-  return <Faucet />;
+  return <DynamicFaucet />;
 };
 
 export default Home;

@@ -46,7 +46,7 @@ const Main = ({}: MainProps) => {
   return (
     <div className={cn("section", styles.section)}>
       {contextHolder}
-      {isAddFaucetLoading && <Loading />}
+      {isAddFaucetLoading && <Loading suspense={false} />}
       <div className={cn("appHeader", styles.title)}>ATRIX FAUCET</div>
       <Space direction="horizontal" className={styles.input}>
         <Input

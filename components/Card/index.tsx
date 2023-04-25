@@ -2,10 +2,7 @@ import { Divider, notification, Space } from "antd";
 import styles from "./Card.module.sass";
 import cn from "classnames";
 import Button from "../Button";
-import {
-  CheckCircleTwoTone,
-  DownOutlined,
-} from "@ant-design/icons";
+import { CheckCircleTwoTone, DownOutlined } from "@ant-design/icons";
 import { getTwitterOAuthUrl } from "@/helpers/OAuthProviderUrl";
 import { useUniswapStore } from "stores/uniswap.store";
 import { displayAddress, getTwitterDatas } from "@/constants/system.const";
@@ -171,7 +168,8 @@ const AtrixCard = ({
       direction="horizontal"
       className={!showButtons ? styles.cardFlexStart : styles.card}
     >
-      {(isPostRefLoading && <Loading />) || (isGetInfoLoading && <Loading />)}
+      {(isPostRefLoading && <Loading suspense={false} />) ||
+        (isGetInfoLoading && <Loading suspense={false} />)}
 
       {contextHolder}
       <Space direction="vertical">
