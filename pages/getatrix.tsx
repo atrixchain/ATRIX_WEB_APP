@@ -1,13 +1,8 @@
-import Loading from "@/components/Loading";
 import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-
-const DynamicGetAtrix = dynamic(() => import("modules/GetAtrix"), {
-  loading: () => <Loading suspense={true}/>,
-});
+import GetAtrix from "modules/GetAtrix";
 
 const Home: NextPage = () => {
-  return <DynamicGetAtrix />;
+  return <GetAtrix />;
 };
 
 export default Home;

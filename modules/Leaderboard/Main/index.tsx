@@ -35,8 +35,8 @@ const Main = ({}: MainProps) => {
   const topPoint = getToppointsResponse?.data?.data;
   return (
     <div className={cn("section", styles.section)}>
-      {(isGetTopPointLoading && <Loading suspense={false} />) ||
-        (isGetInfoLoading && <Loading suspense={false} />)}
+      {(isGetTopPointLoading && <Loading />) ||
+        (isGetInfoLoading && <Loading />)}
       <Row gutter={24}>
         <Col span={17}>
           <div>

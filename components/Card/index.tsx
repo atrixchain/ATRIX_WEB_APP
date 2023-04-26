@@ -168,8 +168,7 @@ const AtrixCard = ({
       direction="horizontal"
       className={!showButtons ? styles.cardFlexStart : styles.card}
     >
-      {(isPostRefLoading && <Loading suspense={false} />) ||
-        (isGetInfoLoading && <Loading suspense={false} />)}
+      {(isPostRefLoading && <Loading />) || (isGetInfoLoading && <Loading />)}
 
       {contextHolder}
       <Space direction="vertical">

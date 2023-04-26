@@ -1,9 +1,12 @@
+import { Router } from "next/router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "lib/react-query";
 import type { AppProps } from "next/app";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "../styles/app.sass";
+import "../styles/nprogress.sass";
+import nProgress from "nprogress";
 // import {
 //   EthereumClient,
 //   w3mConnectors,
@@ -23,7 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   //   provider,
   // });
   // const ethereumClient = new EthereumClient(wagmiClient, chains);
-
+  Router.events.on("routeChangeStart", nProgress.start);
+  Router.events.on("routeChangeError", nProgress.done);
+  Router.events.on("routeChangeComplete", nProgress.done);
   return (
     <>
       <QueryClientProvider client={queryClient}>

@@ -208,7 +208,7 @@ const Header = ({}: HeaderProps) => {
   return (
     <header className={cn(styles.header)}>
       {contextHolder}
-      {isPostRefLoading && <Loading suspense={false} />}
+      {isPostRefLoading && <Loading />}
       <div className={cn("container-wide", styles.container)}>
         <Logo white className={styles.logo} />
         <div className={styles.menu}>

@@ -1,13 +1,8 @@
-import Loading from "@/components/Loading";
 import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-
-const DynamicLeaderboard = dynamic(() => import("modules/Leaderboard"), {
-  loading: () => <Loading suspense={true} />,
-});
+import Leaderboard from "modules/Leaderboard";
 
 const Home: NextPage = () => {
-  return <DynamicLeaderboard />;
+  return <Leaderboard />;
 };
 
 export default Home;

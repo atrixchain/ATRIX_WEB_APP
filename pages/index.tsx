@@ -1,13 +1,8 @@
-import Loading from "@/components/Loading";
 import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-
-const DynamicSwap = dynamic(() => import("modules/Swap"), {
-  loading: () => <Loading suspense={true}/>,
-});
+import Swap from "modules/Swap";
 
 const Home: NextPage = () => {
-  return <DynamicSwap />;
+  return <Swap />;
 };
 
 export default Home;
