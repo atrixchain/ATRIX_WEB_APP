@@ -40,7 +40,9 @@ const TopAccountsTable = ({ topPoint }: TopAccountProps) => {
               <div className={styles.walletColumn}>
                 {account.wallet_address}
               </div>
-              <div className={styles.pointDatas}>{account.point}</div>
+              <div className={styles.pointDatas}>
+                {account.point.toLocaleString("en-US")}
+              </div>
             </Space>
           ))}
         <Button
