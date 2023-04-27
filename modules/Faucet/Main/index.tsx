@@ -25,7 +25,9 @@ const Main = ({}: MainProps) => {
       : null;
   };
   const handleFaucetError = (data: any) => {
-    openNotification("Failed to sent ATRIX", "", "error", api, null);
+    const message = data?.response.data.message;
+
+    openNotification("Failed to sent ATRIX", message, "error", api, null);
   };
   const { mutate: addFaucet, isLoading: isAddFaucetLoading } = useAddFaucet({
     onSuccess: handleAddFaucetSuccess,
