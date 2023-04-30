@@ -1,12 +1,12 @@
 import styles from "./ModalSubmit.module.sass";
 import Image from "@/components/Image";
-import { Button, Space, Modal } from "antd";
+import { Button, Space, Modal, notification } from "antd";
 import { runSwap } from "@/helpers/AlphaRouterService";
 import { useUniswapStore } from "stores/uniswap.store";
 import { useState } from "react";
 import ModalWaitingForm from "./ModalWaiting";
 import ModalSubmittedForm from "./ModalSubmitted";
-
+import { openNotification } from "helpers/pushNotification";
 interface crypto {
   title: string;
   name: string;
@@ -43,6 +43,7 @@ const ModalSumbitForm = ({
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
   const [isSubmittedModalOpen, setIsSubmittedModalOpen] = useState(false);
   const [hash, setHash] = useState("");
+  const [api, contextHolder] = notification.useNotification();
 
   const showWaitingModal = () => {
     setIsWaitingModalOpen(true);
@@ -75,7 +76,14 @@ const ModalSumbitForm = ({
       ? setTimeout(() => {
           showSubmittedModal();
         }, 500)
-      : null;
+      : cancelWaitingModal(),
+      openNotification(
+        "Failed to Swap",
+        "Please try again",
+        "error",
+        api,
+        null
+      );
   };
 
   const { title: firstTitle, image: firstImage } = firstCrypto;
@@ -89,6 +97,7 @@ const ModalSumbitForm = ({
 
   return (
     <>
+      {contextHolder}
       <Modal
         title={title}
         open={open}
