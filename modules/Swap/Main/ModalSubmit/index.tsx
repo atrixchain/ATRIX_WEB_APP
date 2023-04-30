@@ -1,10 +1,11 @@
 import styles from "./ModalSubmit.module.sass";
 import Image from "@/components/Image";
-import { Button, Space, Modal, notification } from "antd";
+import { Button, Space, Modal } from "antd";
 import { runSwap } from "@/helpers/AlphaRouterService";
 import { useUniswapStore } from "stores/uniswap.store";
 import { useState } from "react";
-import { openNotification } from "@/helpers/pushNotification";
+import ModalWaitingForm from "./ModalWaiting";
+import ModalSubmittedForm from "./ModalSubmitted";
 
 interface crypto {
   title: string;
@@ -39,36 +40,42 @@ const ModalSumbitForm = ({
     secondPickedCrypto,
     midPrice,
   } = swapInfo;
+  const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
+  const [isSubmittedModalOpen, setIsSubmittedModalOpen] = useState(false);
+  const [hash, setHash] = useState("");
 
-  const [api, contextHolder] = notification.useNotification();
+  const showWaitingModal = () => {
+    setIsWaitingModalOpen(true);
+  };
+
+  const cancelWaitingModal = () => {
+    setIsWaitingModalOpen(false);
+  };
+
+  const showSubmittedModal = () => {
+    setIsSubmittedModalOpen(true);
+  };
+
+  const cancelSubmittedModal = () => {
+    setIsSubmittedModalOpen(false);
+  };
 
   const handleSwap = async () => {
+    onCancel();
+
+    showWaitingModal();
+
     const swapResponse = await runSwap(transaction, addedSigner);
-    const swapRessponseHash = (await swapResponse) ? swapResponse.hash : "";
+    const swapRessponseHash = swapResponse?.hash;
+    setHash(swapRessponseHash);
+
+    swapRessponseHash && cancelWaitingModal();
 
     swapRessponseHash
-      ? openNotification(
-          "Transaction Submitted",
-          swapRessponseHash,
-          "success",
-          api,  
-          <Button
-            type="link"
-            size="small"
-            onClick={() =>
-              window
-                ?.open(
-                  `https://explorer-testnet.atrixchain.com/tx/${swapRessponseHash}`,
-                  "_blank"
-                )
-                ?.focus()
-            }
-          >
-            See block
-          </Button>
-        )
+      ? setTimeout(() => {
+          showSubmittedModal();
+        }, 500)
       : null;
-    onCancel();
   };
 
   const { title: firstTitle, image: firstImage } = firstCrypto;
@@ -82,7 +89,6 @@ const ModalSumbitForm = ({
 
   return (
     <>
-      {contextHolder}
       <Modal
         title={title}
         open={open}
@@ -226,6 +232,20 @@ const ModalSumbitForm = ({
           </div>
         </Space>
       </Modal>
+      <ModalWaitingForm
+        title={title}
+        open={isWaitingModalOpen}
+        swapInfo={swapInfo}
+        onCancel={cancelWaitingModal}
+      />
+
+      <ModalSubmittedForm
+        title={title}
+        open={isSubmittedModalOpen}
+        hash={hash}
+        onCancel={cancelSubmittedModal}
+        secondCrypto={secondPickedCrypto}
+      />
     </>
   );
 };
