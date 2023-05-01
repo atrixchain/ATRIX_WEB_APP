@@ -60,21 +60,25 @@ const ModalSumbitForm = ({
   };
 
   const handleSwap = async () => {
-    onCancel();
+    try {
+      onCancel();
 
-    showWaitingModal();
+      showWaitingModal();
 
-    const swapResponse = await runSwap(transaction, addedSigner);
-    const swapRessponseHash = swapResponse?.hash;
-    setHash(swapRessponseHash);
+      const swapResponse = await runSwap(transaction, addedSigner);
+      const swapRessponseHash = swapResponse?.hash;
+      setHash(swapRessponseHash);
 
-    swapRessponseHash && cancelWaitingModal();
+      swapRessponseHash && cancelWaitingModal();
 
-    swapRessponseHash
-      ? setTimeout(() => {
-          showSubmittedModal();
-        }, 500)
-      : null;
+      swapRessponseHash
+        ? setTimeout(() => {
+            showSubmittedModal();
+          }, 500)
+        : null;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const { title: firstTitle, image: firstImage } = firstCrypto;
