@@ -44,7 +44,7 @@ const ModalWaitingForm = ({
               onClick={() =>
                 window
                   ?.open(
-                    `https://explorer-testnet.atrixchain.com/tx/${hash}`,
+                    `https://explorer-testnet.attrixchain.com/tx/${hash}`,
                     "_blank"
                   )
                   ?.focus()

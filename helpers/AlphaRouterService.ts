@@ -4,7 +4,7 @@ import ERC20ABI from "../abi.json";
 import routerABI from "../router.abi.json";
 
 // const V3_SWAP_ROUTER_ADDRESS = "0xC6F1Ea85655Fd0cACAB491b7569285A5B6Db1789";
-const REACT_APP_TESTNET = "https://testnet.atrixchain.com/";
+const REACT_APP_TESTNET = "https://testnet.attrixchain.com/";
 
 const chainId = 266;
 
