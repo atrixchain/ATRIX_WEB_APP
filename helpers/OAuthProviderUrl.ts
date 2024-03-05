@@ -6,7 +6,7 @@ const clinetId = process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID;
 export const getTwitterOAuthUrl = () =>
   getURLWithQueryParams(TWITTER_AUTH_URL, {
     client_id: clinetId,
-    redirect_uri: "https://app.attrixchain.com/getatrix",
+    redirect_uri: "https://app.atrixchain.com/getatrix",
     scope: TWITTER_SCOPE,
     state: TWITTER_STATE,
     response_type: "code",
