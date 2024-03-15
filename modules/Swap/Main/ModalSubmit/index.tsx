@@ -42,7 +42,6 @@ const ModalSumbitForm = ({
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
   const [isSubmittedModalOpen, setIsSubmittedModalOpen] = useState(false);
   const [hash, setHash] = useState("");
-
   const showWaitingModal = () => {
     setIsWaitingModalOpen(true);
   };

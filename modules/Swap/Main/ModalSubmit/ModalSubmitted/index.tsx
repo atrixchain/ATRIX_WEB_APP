@@ -12,7 +12,7 @@ interface ModalProps {
   hash: string;
   secondCrypto: string;
 }
-
+const url = process.env.NEXT_PUBLIC_EXPLORER_URL;
 const ModalWaitingForm = ({
   title,
   open,
@@ -42,12 +42,7 @@ const ModalWaitingForm = ({
               title={<div>View on Atrix Explorer</div>}
               style={styles.viewBsb}
               onClick={() =>
-                window
-                  ?.open(
-                    `https://explorer-testnet.attrixchain.com/tx/${hash}`,
-                    "_blank"
-                  )
-                  ?.focus()
+                window?.open(`${url}/tx/${hash}`, "_blank")?.focus()
               }
               type="link"
             />

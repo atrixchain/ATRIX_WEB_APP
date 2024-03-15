@@ -58,7 +58,6 @@ const Main = ({}: MainProps) => {
   };
 
   const { addedProvider, addedWallet, isConnected } = useUniswapStore();
-
   const filteredFirstCrypto: pickedCrypto[] = cryptos.filter((crypto) => {
     return crypto.title === firstPickedCrypto;
   });
@@ -100,21 +99,22 @@ const Main = ({}: MainProps) => {
     const deadlineMinutesValue: number =
       Date.now() / 1000 + deadlineMinutes * 60;
 
-    const swap =
-      inputAmount > 0 &&
-      getPrice(
-        firstPickedCrypto,
-        secondPickedCrypto,
-        inputAmount,
-        slippageAmount,
-        Math.floor(deadlineMinutesValue),
-        addedWallet,
-        addedProvider
-      ).then((data: any) => {
+    if (inputAmount === 0) return;
+    const swap = await getPrice(
+      firstPickedCrypto,
+      secondPickedCrypto,
+      inputAmount,
+      slippageAmount,
+      Math.floor(deadlineMinutesValue),
+      addedWallet,
+      addedProvider
+    ).then((data: any) => {
+      if (data) {
         setTransaction(data[0]);
         setOutputAmount(data[1]);
         setMidPrice(data[2]);
-      });
+      }
+    });
 
     return swap;
   };

@@ -29,9 +29,7 @@ const Header = ({}: HeaderProps) => {
   const [provider, setProvider] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
   const [signerAddress, setSignerAddress] = useState<any>(undefined);
-
   const [uniContract, setUniContract] = useState(undefined);
-
   const [uniAmount, setUniAmount] = useState(0);
   const [api, contextHolder] = notification.useNotification();
   const {
@@ -131,7 +129,6 @@ const Header = ({}: HeaderProps) => {
     } else {
       console.log("No authorized account found");
     }
-
     const uniContract = await getMTKContract();
     setUniContract(uniContract);
   };

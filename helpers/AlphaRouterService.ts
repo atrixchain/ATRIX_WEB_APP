@@ -1,31 +1,40 @@
-import { Fetcher, Route, Token, TokenAmount, Trade, TradeType } from "../sdk";
+import {
+  ChainId,
+  Fetcher,
+  Route,
+  Token,
+  TokenAmount,
+  Trade,
+  TradeType,
+} from "../sdk";
 const { ethers } = require("ethers");
 import ERC20ABI from "../abi.json";
 import routerABI from "../router.abi.json";
 
 // const V3_SWAP_ROUTER_ADDRESS = "0xC6F1Ea85655Fd0cACAB491b7569285A5B6Db1789";
-const REACT_APP_TESTNET = "https://testnet.attrixchain.com/";
+const REACT_APP_TESTNET = process.env.NEXT_PUBLIC_CHAIN_URL;
+console.log("react", REACT_APP_TESTNET);
 
-const chainId = 266;
+const chainId = 266 as ChainId;
 
 const web3Provider = new ethers.providers.JsonRpcProvider(REACT_APP_TESTNET);
 
 const name0 = "Atrix Token";
 const symbol0 = "ATR";
 const decimals0 = 18;
-const address0 = "0xC5198C95d7f76081dA83698a128404361E0Dfd80";
+const address0 = "0xF311952a748e9c327562F6da0Fa00f6E4cffC352";
 
 const name1 = "My token";
 const symbol1 = "MTK";
 const decimals1 = 18;
-const address1 = "0x9df341764580037A6A166B2D40798EEb507F1B6C";
+const address1 = "0xca7fb6241a5614f9960b9E0807fD11FC34F6a2b9";
 
 const name3 = "WETH";
 const symbol3 = "WETH";
 const decimals3 = 18;
-const address3 = "0xC5198C95d7f76081dA83698a128404361E0Dfd80";
+const address3 = "0xF311952a748e9c327562F6da0Fa00f6E4cffC352";
 
-const routerAddress = "0xfEE938f75ad47655561F7e5b03dF526566B054ca";
+const routerAddress = "0x0FCb1eb4114dDf8C385c5C596d59c9C4c7c2E55e";
 
 const ATR = new Token(chainId, address0, decimals0, symbol0, name0);
 const MTK = new Token(chainId, address1, decimals1, symbol1, name1);
@@ -36,7 +45,7 @@ export const getWethContract = () =>
 export const getMTKContract = () =>
   new ethers.Contract(address1, ERC20ABI, web3Provider);
 
-export const getRouterContract = (signer: object) =>
+export const getRouterContract = (signer: any) =>
   new ethers.Contract(routerAddress, routerABI, signer);
 
 export const getPrice = async (
