@@ -189,7 +189,10 @@ const AtrixCard = ({
               title={
                 <div>
                   {viewAllButtonTitle}
-                  <DownOutlined />
+                  <DownOutlined
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  />
                 </div>
               }
               type={"link"}
@@ -278,7 +281,11 @@ const AtrixCard = ({
                           Request to Wallet
                         </div>
                         <div className={styles.accountChecked}>
-                          <CheckCircleTwoTone twoToneColor="#52c41a" />
+                          <CheckCircleTwoTone
+                            twoToneColor="#52c41a"
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                           {` ${wallet}`}
                         </div>
                       </Space>
