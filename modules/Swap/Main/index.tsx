@@ -166,7 +166,10 @@ const Main = ({}: MainProps) => {
                     style={{ borderRadius: 30 }}
                   />
                   <div className={styles.bold}>{firstTitle}</div>
-                  <DownOutlined />
+                  <DownOutlined
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  />
                 </Space>
               }
             />
@@ -204,7 +207,10 @@ const Main = ({}: MainProps) => {
                   style={{ borderRadius: 30 }}
                 />
                 <div className={styles.bold}>{secondTitle}</div>
-                <DownOutlined />
+                <DownOutlined
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                />
               </Space>
             }
           />
