@@ -19,7 +19,7 @@ export const INVITE_FOR_EACH_PERSON =
   "For each person you invite, you'll both get boosted 10,000 ATRIX Points. For each weekly transaction they do, you'll get 1,750 additional points. Learn More";
 export const VERIFY_TW_BUTTON = "Verify Twitter to Earn ATRIX Points";
 export const SHARE_TW = "Share on Twitter";
-export const COPY_LINK = "Coppy Link";
+export const COPY_LINK = "Copy Link";
 export const ENTER_REF = "Enter Your Referral Wallet Address (0x...)i";
 
 export const TWITTER_SHARE_LINK =

@@ -29,7 +29,7 @@ export const headerNavigation = [
   },
   {
     title: "Explorer",
-    url: "https://explorer.attrixchain.com/",
+    url: "https://explorer.atrixchain.com/",
     external: true,
   },
 ];
