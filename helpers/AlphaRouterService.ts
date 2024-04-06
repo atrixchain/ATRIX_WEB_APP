@@ -13,7 +13,6 @@ import routerABI from "../router.abi.json";
 
 // const V3_SWAP_ROUTER_ADDRESS = "0xC6F1Ea85655Fd0cACAB491b7569285A5B6Db1789";
 const REACT_APP_TESTNET = process.env.NEXT_PUBLIC_CHAIN_URL;
-console.log("react", REACT_APP_TESTNET);
 
 const chainId = 266 as ChainId;
 
@@ -22,19 +21,19 @@ const web3Provider = new ethers.providers.JsonRpcProvider(REACT_APP_TESTNET);
 const name0 = "Atrix Token";
 const symbol0 = "ATR";
 const decimals0 = 18;
-const address0 = "0xF311952a748e9c327562F6da0Fa00f6E4cffC352";
+const address0 = "0x00Ae625a9f6EA6E5b52c610102543fd71EbF02Af";
 
 const name1 = "My token";
 const symbol1 = "MTK";
 const decimals1 = 18;
-const address1 = "0xca7fb6241a5614f9960b9E0807fD11FC34F6a2b9";
+const address1 = "0x149Dc8874842a0050432b437d54c58403b80F54c";
 
 const name3 = "WETH";
 const symbol3 = "WETH";
 const decimals3 = 18;
-const address3 = "0xF311952a748e9c327562F6da0Fa00f6E4cffC352";
+const address3 = "0x00Ae625a9f6EA6E5b52c610102543fd71EbF02Af";
 
-const routerAddress = "0x0FCb1eb4114dDf8C385c5C596d59c9C4c7c2E55e";
+const routerAddress = "0x6D6fD753d733B03095F7AaE5C9454A519419b377";
 
 const ATR = new Token(chainId, address0, decimals0, symbol0, name0);
 const MTK = new Token(chainId, address1, decimals1, symbol1, name1);

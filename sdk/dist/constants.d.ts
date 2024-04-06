@@ -16,7 +16,7 @@ export declare enum Rounding {
   ROUND_HALF_UP = 1,
   ROUND_UP = 2,
 }
-export declare const FACTORY_ADDRESS = '0xb931D9fCC2ed1955aF58d46426Fb5901679Abe49' // must be identical to UniswapV2Factory in atrix_address.json
+export declare const FACTORY_ADDRESS = '0x5C6Bf7d056D6990194039570b24A15333EC3424c' // must be identical to UniswapV2Factory in atrix_address.json
 export declare const INIT_CODE_HASH = '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f'
 export declare const MINIMUM_LIQUIDITY: JSBI
 export declare const ZERO: JSBI
